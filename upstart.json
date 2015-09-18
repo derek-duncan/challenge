@@ -1,0 +1,12 @@
+{
+  "name"             : "Challenge",
+  "script"           : "server.js",
+  "watch"            : ['index.js', 'src'],
+  "ignore_watch"     : ["node_modules", ".git"],
+  "env": {
+    "NODE_PATH"      : ".",
+    "NODE_ENV"       : "development",
+  }
+  //"instances"        : 0
+}
+
