@@ -14,7 +14,7 @@ import { RoutingContext, match } from 'react-router';
 import React from 'react/addons';
 
 import alt from 'src/alt';
-import reactRoutes from 'src/routes/routes.react';
+import reactRoutes from 'src/routes/client';
 
 var app = koa();
 
@@ -34,29 +34,20 @@ app.use(serve('./public'));
 
 // TODO: Setup Alt according to the example and create a folder structure
 app.use(function* (next) {
-  let self = this;
-  let viewData;
-  try {
-    viewData = JSON.stringify(this.state.data || {});
-  } catch(err) {
-    console.log(err)
-  }
-  alt.bootstrap(viewData);
-  let iso = new Iso();
-  let routeObject = {
-    routes: reactRoutes,
-    location: createLocation(self.url)
-  }
 
+  // takes local data and seeds react stores
+  alt.bootstrap(JSON.stringify(this.state.data || {}));
+  let iso = new Iso();
+
+
+  // react-router runs the url of the request
+  let routeObject = { routes: reactRoutes, location: createLocation(this.url) };
   let [redirectLocation, renderProps] = yield Promise.promisify(match)(routeObject);
-  if (renderProps) {
-    const node = React.renderToString(<RoutingContext {...renderProps}/>);
-    iso.add(node, {});
-    yield this.render('layout', { html: iso.render() });
-  } else {
-    self.status = 404;
-    self.body = 'Not Found';
-  }
+
+  // uses iso to render and pick back up on the client
+  const node = React.renderToString(<RoutingContext {...renderProps}/>);
+  iso.add(node, alt.flush());
+  yield this.render('layout', { html: iso.render() });
 
 });
 
