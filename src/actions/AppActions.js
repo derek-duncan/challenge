@@ -2,7 +2,7 @@ import alt from '../alt';
 
 class AppActions {
   constructor() {
-    //this.generateActions('setPageTitle');
+    this.generateActions('setPageTitle');
   }
 }
 

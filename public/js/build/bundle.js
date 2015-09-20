@@ -25440,7 +25440,7 @@
 
 	var _componentsAppJsx2 = _interopRequireDefault(_componentsAppJsx);
 
-	var _pagesHomeJsx = __webpack_require__(235);
+	var _pagesHomeJsx = __webpack_require__(234);
 
 	var _pagesHomeJsx2 = _interopRequireDefault(_pagesHomeJsx);
 
@@ -25486,23 +25486,15 @@
 
 	var _actionsAppActions2 = _interopRequireDefault(_actionsAppActions);
 
-	var _actionsPageTitleActions = __webpack_require__(231);
-
-	var _actionsPageTitleActions2 = _interopRequireDefault(_actionsPageTitleActions);
-
 	// Stores
 
-	var _storesAppStore = __webpack_require__(232);
+	var _storesAppStore = __webpack_require__(231);
 
 	var _storesAppStore2 = _interopRequireDefault(_storesAppStore);
 
-	var _storesPageTitleStore = __webpack_require__(233);
-
-	var _storesPageTitleStore2 = _interopRequireDefault(_storesPageTitleStore);
-
 	// Components
 
-	var _componentsHeaderJsx = __webpack_require__(234);
+	var _componentsHeaderJsx = __webpack_require__(232);
 
 	var _componentsHeaderJsx2 = _interopRequireDefault(_componentsHeaderJsx);
 
@@ -25514,42 +25506,35 @@
 
 	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
 	    this.state = _storesAppStore2['default'].getState();
-	    if (typeof window !== 'undefined') {
-	      document.title = _storesPageTitleStore2['default'].getState().title;
-	    }
 	  }
 
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      _storesPageTitleStore2['default'].listen(this._handlePageTitleChange.bind(this));
+	      _storesAppStore2['default'].listen(this.handleChange.bind(this));
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      _storesPageTitleStore2['default'].unlisten(this._handlePageTitleChange);
+	      _storesAppStore2['default'].unlisten(this.handleChange);
 	    }
 	  }, {
-	    key: '_handlePageTitleChange',
-	    value: function _handlePageTitleChange(_ref) {
-	      var title = _ref.title;
-
-	      document.title = title;
-	    }
-	  }, {
-	    key: '_handleInputChange',
-	    value: function _handleInputChange(e) {
-	      _actionsPageTitleActions2['default'].set(e.target.value);
+	    key: 'handleChange',
+	    value: function handleChange(state) {
+	      this.setState(state);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
-	        'main',
-	        null,
-	        _react2['default'].createElement(_componentsHeaderJsx2['default'], null),
-	        _react2['default'].createElement('input', { onChange: this._handleInputChange, type: 'text', placeholder: 'Change the page title...' }),
-	        this.props.children
+	        'div',
+	        { id: 'app' },
+	        _react2['default'].createElement(_componentsHeaderJsx2['default'], { pageTitle: this.state.pageTitle }),
+	        _react2['default'].createElement(
+	          'div',
+	          { id: 'content' },
+	          this.props.children
+	        )
 	      );
 	    }
 	  }]);
@@ -25580,9 +25565,10 @@
 
 	var AppActions = function AppActions() {
 	  _classCallCheck(this, AppActions);
+
+	  this.generateActions('setPageTitle');
 	};
 
-	//this.generateActions('setPageTitle');
 	exports['default'] = _alt2['default'].createActions(AppActions);
 	module.exports = exports['default'];
 
@@ -27122,32 +27108,7 @@
 	  value: true
 	});
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _alt = __webpack_require__(218);
-
-	var _alt2 = _interopRequireDefault(_alt);
-
-	var PageTitleActions = function PageTitleActions() {
-	  _classCallCheck(this, PageTitleActions);
-
-	  this.generateActions('set');
-	};
-
-	exports['default'] = _alt2['default'].createActions(PageTitleActions);
-	module.exports = exports['default'];
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -27161,63 +27122,31 @@
 
 	var _actionsAppActions2 = _interopRequireDefault(_actionsAppActions);
 
-	var AppStore = function AppStore() {
-	  _classCallCheck(this, AppStore);
+	var AppStore = (function () {
+	  function AppStore() {
+	    _classCallCheck(this, AppStore);
 
-	  this.bindActions(_actionsAppActions2['default']);
-	};
+	    this.bindActions(_actionsAppActions2['default']);
+	  }
+
+	  _createClass(AppStore, [{
+	    key: 'onSetPageTitle',
+	    value: function onSetPageTitle(title) {
+	      this.pageTitle = title;
+	      if (typeof window !== 'undefined') {
+	        document.title = title;
+	      }
+	    }
+	  }]);
+
+	  return AppStore;
+	})();
 
 	exports['default'] = _alt2['default'].createStore(AppStore, 'AppStore');
 	module.exports = exports['default'];
 
 /***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	var _alt = __webpack_require__(218);
-
-	var _alt2 = _interopRequireDefault(_alt);
-
-	var _actionsPageTitleActions = __webpack_require__(231);
-
-	var _actionsPageTitleActions2 = _interopRequireDefault(_actionsPageTitleActions);
-
-	var PageTitleStore = (function () {
-	  function PageTitleStore() {
-	    _classCallCheck(this, PageTitleStore);
-
-	    this.title = 'Challenge';
-
-	    this.bindActions(_actionsPageTitleActions2['default']);
-	  }
-
-	  _createClass(PageTitleStore, [{
-	    key: 'onSet',
-	    value: function onSet(title) {
-	      this.title = title;
-	    }
-	  }]);
-
-	  return PageTitleStore;
-	})();
-
-	exports['default'] = _alt2['default'].createStore(PageTitleStore, 'PageTitleStore');
-	module.exports = exports['default'];
-
-/***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27245,43 +27174,58 @@
 
 	// Stores
 
-	var App = (function (_React$Component) {
-	  _inherits(App, _React$Component);
+	// Components
 
-	  function App(props) {
-	    _classCallCheck(this, App);
+	var _HeaderTitleJsx = __webpack_require__(233);
 
-	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
+	var _HeaderTitleJsx2 = _interopRequireDefault(_HeaderTitleJsx);
+
+	var Header = (function (_React$Component) {
+	  _inherits(Header, _React$Component);
+
+	  function Header(props) {
+	    _classCallCheck(this, Header);
+
+	    _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
 	  }
 
-	  _createClass(App, [{
+	  _createClass(Header, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        'header',
 	        { id: 'header' },
 	        _react2['default'].createElement(
-	          'span',
-	          { className: 'header-title' },
-	          'Challenge.io'
+	          'div',
+	          { className: 'header-default' },
+	          _react2['default'].createElement(
+	            'span',
+	            { className: 'header-title' },
+	            'Challenge.io'
+	          ),
+	          _react2['default'].createElement(
+	            'button',
+	            { className: 'header-cta button' },
+	            'Start A Challenge'
+	          )
 	        ),
 	        _react2['default'].createElement(
-	          'button',
-	          { className: 'header-cta button' },
-	          'Start A Challenge'
+	          'div',
+	          { className: 'header-page' },
+	          _react2['default'].createElement(_HeaderTitleJsx2['default'], { pageTitle: this.props.pageTitle })
 	        )
 	      );
 	    }
 	  }]);
 
-	  return App;
+	  return Header;
 	})(_react2['default'].Component);
 
-	exports['default'] = App;
+	exports['default'] = Header;
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27306,22 +27250,93 @@
 
 	var _reactRouter = __webpack_require__(3);
 
-	var Home = (function (_React$Component) {
-	  _inherits(Home, _React$Component);
+	var HeaderTitle = (function (_React$Component) {
+	  _inherits(HeaderTitle, _React$Component);
 
-	  function Home() {
-	    _classCallCheck(this, Home);
+	  function HeaderTitle() {
+	    _classCallCheck(this, HeaderTitle);
 
-	    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(HeaderTitle.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
-	  _createClass(Home, [{
+	  _createClass(HeaderTitle, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        'h2',
-	        null,
-	        'Challenge your friends'
+	        { className: 'page-title' },
+	        this.props.pageTitle
+	      );
+	    }
+	  }]);
+
+	  return HeaderTitle;
+	})(_react2['default'].Component);
+
+	exports['default'] = HeaderTitle;
+	module.exports = exports['default'];
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(3);
+
+	// Actions
+
+	var _actionsAppActions = __webpack_require__(217);
+
+	var _actionsAppActions2 = _interopRequireDefault(_actionsAppActions);
+
+	// Components
+
+	var _componentsChallengeChallengeJsx = __webpack_require__(235);
+
+	var _componentsChallengeChallengeJsx2 = _interopRequireDefault(_componentsChallengeChallengeJsx);
+
+	var Home = (function (_React$Component) {
+	  _inherits(Home, _React$Component);
+
+	  function Home(props) {
+	    _classCallCheck(this, Home);
+
+	    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Home, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      setTimeout(function () {
+	        _actionsAppActions2['default'].setPageTitle('Home');
+	      }, 0);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { id: 'home' },
+	        _react2['default'].createElement(_componentsChallengeChallengeJsx2['default'], null)
 	      );
 	    }
 	  }]);
@@ -27330,6 +27345,203 @@
 	})(_react2['default'].Component);
 
 	exports['default'] = Home;
+	module.exports = exports['default'];
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Modules
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	// Components
+
+	var _NameJsx = __webpack_require__(236);
+
+	var _NameJsx2 = _interopRequireDefault(_NameJsx);
+
+	var _CardJsx = __webpack_require__(237);
+
+	var _CardJsx2 = _interopRequireDefault(_CardJsx);
+
+	var Challenge = (function (_React$Component) {
+	  _inherits(Challenge, _React$Component);
+
+	  function Challenge(props) {
+	    _classCallCheck(this, Challenge);
+
+	    _get(Object.getPrototypeOf(Challenge.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Challenge, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { id: 'challenge' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'challenge-details' },
+	          _react2['default'].createElement(
+	            'p',
+	            { className: 'challenge-tagline' },
+	            'Goal'
+	          ),
+	          _react2['default'].createElement(_NameJsx2['default'], { name: 'Test Challenge' }),
+	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', value: this.props.url })
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'challenge-cards' },
+	          _react2['default'].createElement(_CardJsx2['default'], { step: this.props.step })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Challenge;
+	})(_react2['default'].Component);
+
+	exports['default'] = Challenge;
+
+	Challenge.defaultProps = {
+	  url: 'http://challen.ge/192381',
+	  step: {
+	    name: 'How long will it take?'
+	  }
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Modules
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	// Actions
+
+	// Stores
+
+	var Name = (function (_React$Component) {
+	  _inherits(Name, _React$Component);
+
+	  function Name(props) {
+	    _classCallCheck(this, Name);
+
+	    _get(Object.getPrototypeOf(Name.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Name, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'h4',
+	        { className: 'challenge-name' },
+	        this.props.name
+	      );
+	    }
+	  }]);
+
+	  return Name;
+	})(_react2['default'].Component);
+
+	exports['default'] = Name;
+
+	Name.defaultProps = {
+	  name: ''
+	};
+	module.exports = exports['default'];
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Modules
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Card = (function (_React$Component) {
+	  _inherits(Card, _React$Component);
+
+	  function Card(props) {
+	    _classCallCheck(this, Card);
+
+	    _get(Object.getPrototypeOf(Card.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Card, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'card' },
+	        _react2['default'].createElement(
+	          'h4',
+	          { className: 'card-name' },
+	          this.props.step.name
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Card;
+	})(_react2['default'].Component);
+
+	exports['default'] = Card;
 	module.exports = exports['default'];
 
 /***/ }
