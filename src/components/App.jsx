@@ -6,32 +6,40 @@ import { RouteHandler } from 'react-router';
 
 // Actions
 import AppActions from '../actions/AppActions';
+import PageTitleActions from '../actions/PageTitleActions';
 
 // Stores
 import AppStore from '../stores/AppStore';
+import PageTitleStore from '../stores/PageTitleStore';
+
+// Components
+import Header from '../components/Header.jsx';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = AppStore.getState();
+    if (typeof window !== 'undefined') {
+      document.title = PageTitleStore.getState().title;
+    }
   }
   componentDidMount() {
-    AppStore.listen(this._onChange.bind(this));
+    PageTitleStore.listen(this._handlePageTitleChange.bind(this));
   }
   componentWillUnmount() {
-    AppStore.unlisten(this._onChange);
+    PageTitleStore.unlisten(this._handlePageTitleChange);
   }
-  _onChange(state) {
-    this.setState(state);
+  _handlePageTitleChange({ title }) {
+    document.title = title;
   }
   _handleInputChange(e) {
-    AppActions.updateTitle(e.target.value);
+    PageTitleActions.set(e.target.value);
   }
   render() {
     return (
       <main>
-        <h2>{this.state.title}</h2>
-        <input onChange={this._handleInputChange} type='text' placeholder='Change the title...' />
+        <Header />
+        <input onChange={this._handleInputChange} type='text' placeholder='Change the page title...' />
         {this.props.children}
       </main>
     )

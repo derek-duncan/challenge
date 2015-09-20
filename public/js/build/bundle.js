@@ -25440,14 +25440,14 @@
 
 	var _componentsAppJsx2 = _interopRequireDefault(_componentsAppJsx);
 
-	var _componentsHomeJsx = __webpack_require__(232);
+	var _pagesHomeJsx = __webpack_require__(235);
 
-	var _componentsHomeJsx2 = _interopRequireDefault(_componentsHomeJsx);
+	var _pagesHomeJsx2 = _interopRequireDefault(_pagesHomeJsx);
 
 	var routes = _react2['default'].createElement(
 	  _reactRouter.Route,
 	  { path: '/', component: _componentsAppJsx2['default'] },
-	  _react2['default'].createElement(_reactRouter.IndexRoute, { component: _componentsHomeJsx2['default'] })
+	  _react2['default'].createElement(_reactRouter.IndexRoute, { component: _pagesHomeJsx2['default'] })
 	);
 
 	exports['default'] = routes;
@@ -25486,11 +25486,25 @@
 
 	var _actionsAppActions2 = _interopRequireDefault(_actionsAppActions);
 
+	var _actionsPageTitleActions = __webpack_require__(231);
+
+	var _actionsPageTitleActions2 = _interopRequireDefault(_actionsPageTitleActions);
+
 	// Stores
 
-	var _storesAppStore = __webpack_require__(231);
+	var _storesAppStore = __webpack_require__(232);
 
 	var _storesAppStore2 = _interopRequireDefault(_storesAppStore);
+
+	var _storesPageTitleStore = __webpack_require__(233);
+
+	var _storesPageTitleStore2 = _interopRequireDefault(_storesPageTitleStore);
+
+	// Components
+
+	var _componentsHeaderJsx = __webpack_require__(234);
+
+	var _componentsHeaderJsx2 = _interopRequireDefault(_componentsHeaderJsx);
 
 	var App = (function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -25500,27 +25514,32 @@
 
 	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
 	    this.state = _storesAppStore2['default'].getState();
+	    if (typeof window !== 'undefined') {
+	      document.title = _storesPageTitleStore2['default'].getState().title;
+	    }
 	  }
 
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      _storesAppStore2['default'].listen(this._onChange.bind(this));
+	      _storesPageTitleStore2['default'].listen(this._handlePageTitleChange.bind(this));
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      _storesAppStore2['default'].unlisten(this._onChange);
+	      _storesPageTitleStore2['default'].unlisten(this._handlePageTitleChange);
 	    }
 	  }, {
-	    key: '_onChange',
-	    value: function _onChange(state) {
-	      this.setState(state);
+	    key: '_handlePageTitleChange',
+	    value: function _handlePageTitleChange(_ref) {
+	      var title = _ref.title;
+
+	      document.title = title;
 	    }
 	  }, {
 	    key: '_handleInputChange',
 	    value: function _handleInputChange(e) {
-	      _actionsAppActions2['default'].updateTitle(e.target.value);
+	      _actionsPageTitleActions2['default'].set(e.target.value);
 	    }
 	  }, {
 	    key: 'render',
@@ -25528,12 +25547,8 @@
 	      return _react2['default'].createElement(
 	        'main',
 	        null,
-	        _react2['default'].createElement(
-	          'h2',
-	          null,
-	          this.state.title
-	        ),
-	        _react2['default'].createElement('input', { onChange: this._handleInputChange, type: 'text', placeholder: 'Change the title...' }),
+	        _react2['default'].createElement(_componentsHeaderJsx2['default'], null),
+	        _react2['default'].createElement('input', { onChange: this._handleInputChange, type: 'text', placeholder: 'Change the page title...' }),
 	        this.props.children
 	      );
 	    }
@@ -25565,10 +25580,9 @@
 
 	var AppActions = function AppActions() {
 	  _classCallCheck(this, AppActions);
-
-	  this.generateActions('updateTitle');
 	};
 
+	//this.generateActions('setPageTitle');
 	exports['default'] = _alt2['default'].createActions(AppActions);
 	module.exports = exports['default'];
 
@@ -27108,7 +27122,32 @@
 	  value: true
 	});
 
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _alt = __webpack_require__(218);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	var PageTitleActions = function PageTitleActions() {
+	  _classCallCheck(this, PageTitleActions);
+
+	  this.generateActions('set');
+	};
+
+	exports['default'] = _alt2['default'].createActions(PageTitleActions);
+	module.exports = exports['default'];
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -27122,30 +27161,127 @@
 
 	var _actionsAppActions2 = _interopRequireDefault(_actionsAppActions);
 
-	var AppStore = (function () {
-	  function AppStore() {
-	    _classCallCheck(this, AppStore);
+	var AppStore = function AppStore() {
+	  _classCallCheck(this, AppStore);
 
-	    this.title = 'Home';
-
-	    this.bindActions(_actionsAppActions2['default']);
-	  }
-
-	  _createClass(AppStore, [{
-	    key: 'onUpdateTitle',
-	    value: function onUpdateTitle(title) {
-	      this.title = title;
-	    }
-	  }]);
-
-	  return AppStore;
-	})();
+	  this.bindActions(_actionsAppActions2['default']);
+	};
 
 	exports['default'] = _alt2['default'].createStore(AppStore, 'AppStore');
 	module.exports = exports['default'];
 
 /***/ },
-/* 232 */
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _alt = __webpack_require__(218);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	var _actionsPageTitleActions = __webpack_require__(231);
+
+	var _actionsPageTitleActions2 = _interopRequireDefault(_actionsPageTitleActions);
+
+	var PageTitleStore = (function () {
+	  function PageTitleStore() {
+	    _classCallCheck(this, PageTitleStore);
+
+	    this.title = 'Challenge';
+
+	    this.bindActions(_actionsPageTitleActions2['default']);
+	  }
+
+	  _createClass(PageTitleStore, [{
+	    key: 'onSet',
+	    value: function onSet(title) {
+	      this.title = title;
+	    }
+	  }]);
+
+	  return PageTitleStore;
+	})();
+
+	exports['default'] = _alt2['default'].createStore(PageTitleStore, 'PageTitleStore');
+	module.exports = exports['default'];
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Modules
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	// Actions
+
+	// Stores
+
+	var App = (function (_React$Component) {
+	  _inherits(App, _React$Component);
+
+	  function App(props) {
+	    _classCallCheck(this, App);
+
+	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'header',
+	        { id: 'header' },
+	        _react2['default'].createElement(
+	          'span',
+	          { className: 'header-title' },
+	          'Challenge.io'
+	        ),
+	        _react2['default'].createElement(
+	          'button',
+	          { className: 'header-cta button' },
+	          'Start A Challenge'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return App;
+	})(_react2['default'].Component);
+
+	exports['default'] = App;
+	module.exports = exports['default'];
+
+/***/ },
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27183,9 +27319,9 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
-	        'h1',
+	        'h2',
 	        null,
-	        'Made it'
+	        'Challenge your friends'
 	      );
 	    }
 	  }]);
