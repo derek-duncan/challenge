@@ -1,9 +1,9 @@
 'use strict';
 
-import { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import shortid from 'shortid';
 
-const ChallengeSchema = new Schema({
+const ChallengeSchema = new mongoose.Schema({
   _id: { type: String, unique: true, default: shortid.generate },
   name: String,
   details: String,
