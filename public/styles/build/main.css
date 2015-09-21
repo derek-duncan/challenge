@@ -488,7 +488,7 @@ html, body {
 }
 
 #challenge .challenge-name {
-  margin: 0.1rem 0 0.75rem;
+  margin: 0.1rem 0 1.25rem;
 }
 
 #challenge .challenge-name .name-text, #challenge .challenge-name .name-input {
@@ -532,7 +532,6 @@ html, body {
 }
 
 #challenge .challenge-url:focus {
-  background-color: #AAAAAA;
   color: #333;
 }
 

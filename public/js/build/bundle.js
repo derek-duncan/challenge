@@ -27389,9 +27389,16 @@
 	    _classCallCheck(this, Challenge);
 
 	    _get(Object.getPrototypeOf(Challenge.prototype), 'constructor', this).call(this, props);
+	    this.selectUrl = this.selectUrl.bind(this);
 	  }
 
 	  _createClass(Challenge, [{
+	    key: 'selectUrl',
+	    value: function selectUrl(e) {
+	      e.preventDefault();
+	      _react2['default'].findDOMNode(this.refs.url).setSelectionRange(0, 1000);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -27406,7 +27413,7 @@
 	            'Goal'
 	          ),
 	          _react2['default'].createElement(_NameJsx2['default'], { name: 'Test Challenge' }),
-	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', value: this.props.url })
+	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.props.url, onClick: this.selectUrl })
 	        ),
 	        _react2['default'].createElement(
 	          'div',

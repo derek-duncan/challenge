@@ -10,6 +10,11 @@ import Card from './Card.jsx';
 export default class Challenge extends React.Component {
   constructor(props) {
     super(props);
+    this.selectUrl = this.selectUrl.bind(this);
+  }
+  selectUrl(e) {
+    e.preventDefault();
+    React.findDOMNode(this.refs.url).setSelectionRange(0, 1000);
   }
   render() {
     return (
@@ -17,7 +22,7 @@ export default class Challenge extends React.Component {
         <div className='challenge-details'>
           <p className='challenge-tagline'>Goal</p>
           <Name name='Test Challenge' />
-          <input className='challenge-url' type='text' value={this.props.url} />
+          <input className='challenge-url' type='text' ref='url' value={this.props.url} onClick={this.selectUrl} />
         </div>
         <div className='challenge-cards'>
           <Card step={this.props.step} />
