@@ -27466,15 +27466,30 @@
 	    _classCallCheck(this, Name);
 
 	    _get(Object.getPrototypeOf(Name.prototype), 'constructor', this).call(this, props);
+	    this.toggleInput = this.toggleInput.bind(this);
 	  }
 
 	  _createClass(Name, [{
+	    key: 'toggleInput',
+	    value: function toggleInput() {
+	      var text = _react2['default'].findDOMNode(this.refs.text);
+	      var input = _react2['default'].findDOMNode(this.refs.input);
+	      text.classList.toggle('hide');
+	      input.classList.toggle('show');
+	      input.focus();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
-	        'h4',
+	        'div',
 	        { className: 'challenge-name' },
-	        this.props.name
+	        _react2['default'].createElement(
+	          'h4',
+	          { className: 'name-text', ref: 'text', onClick: this.toggleInput },
+	          this.props.name
+	        ),
+	        _react2['default'].createElement('input', { className: 'name-input input hide', ref: 'input', onBlur: this.toggleInput, defaultValue: this.props.name })
 	      );
 	    }
 	  }]);

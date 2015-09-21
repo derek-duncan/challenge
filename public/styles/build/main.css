@@ -447,7 +447,7 @@ html, body {
 }
 
 #header .header-title {
-  color: #DFDFDF;
+  color: #AAAAAA;
   float: left;
   margin-top: 0.75rem;
 }
@@ -488,16 +488,36 @@ html, body {
 }
 
 #challenge .challenge-name {
-  display: inline-block;
+  margin: 0.1rem 0 0.75rem;
+}
+
+#challenge .challenge-name .name-text, #challenge .challenge-name .name-input {
   font-size: 1.75em;
   font-weight: 600;
-  margin: 0.1rem 0 0.75rem;
+}
+
+#challenge .challenge-name .name-text.hide, #challenge .challenge-name .name-input.hide {
+  display: none;
+}
+
+#challenge .challenge-name .name-text.show, #challenge .challenge-name .name-input.show {
+  display: block;
+}
+
+#challenge .challenge-name .name-text {
+  display: inline-block;
+  margin: 0;
   padding: 0 0 0.2rem;
   background-image: -webkit-linear-gradient(left, #AAAAAA 33%, #F6F6F6 0%);
   background-image: linear-gradient(to right, #AAAAAA 33%, #F6F6F6 0%);
   background-position: bottom;
   background-size: 10px 2px;
   background-repeat: repeat-x;
+}
+
+#challenge .challenge-name .name-input {
+  width: 100%;
+  text-align: center;
 }
 
 #challenge .challenge-url {
@@ -536,6 +556,18 @@ html, body {
   margin: 0 auto;
   font-size: 1.5em;
   font-weight: 600;
+}
+
+.input {
+  display: inline-block;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: none;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #DFDFDF;
+  padding: 0.5rem 1rem;
 }
 
 .button {
