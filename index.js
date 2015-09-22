@@ -14,9 +14,10 @@ import { RoutingContext, match } from 'react-router';
 import React from 'react/addons';
 
 import alt from 'src/alt';
+import serverRoutes from 'src/routes/server';
 import reactRoutes from 'src/routes/client';
 
-var app = koa();
+const app = koa();
 
 // Log dev to the console
 app.use(logger());
@@ -31,6 +32,10 @@ app.use(views('src/views', {
 
 // Static routes: Public directory
 app.use(serve('./public'));
+
+// Setup koa server routes
+app.use(serverRoutes.routes());
+app.use(serverRoutes.allowedMethods());
 
 // TODO: Setup Alt according to the example and create a folder structure
 app.use(function* (next) {
