@@ -27825,30 +27825,18 @@
 	      this.setState(getCarderState());
 	    }
 	  }, {
-	    key: 'renderChildren',
-	    value: function renderChildren() {
-	      var _this = this;
-
-	      var children = _react2['default'].Children.map(this.props.children, function (child, i) {
-	        i = i + 1;
-	        if (i === _this.state.activeCard) {
-	          return _react2['default'].cloneElement(child, {
-	            active: true
-	          });
-	        } else {
-	          return child;
-	        }
-	      });
-	      return children;
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this = this;
+
 	      var numberOfCards = this.props.children.props.children.length;
+	      var renderedChildren = _react2['default'].Children.map(this.props.children, function (child, i) {
+	        return _this.state.activeCard == i + 1 ? _react2['default'].cloneElement(child, { active: _this.state.activeCard }) : child;
+	      });
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'challenge-cards' },
-	        this.renderChildren(),
+	        renderedChildren,
 	        _react2['default'].createElement(_CarderPagerJsx2['default'], { size: numberOfCards, active: this.state.activeCard })
 	      );
 	    }
@@ -28011,13 +27999,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'challenge-pager' },
-	        pager,
-	        _react2['default'].createElement(
-	          'div',
-	          null,
-	          'Active: ',
-	          this.props.active
-	        )
+	        pager
 	      );
 	    }
 	  }]);

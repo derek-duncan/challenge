@@ -25,7 +25,6 @@ export default class CarderPager extends React.Component {
     return (
       <div className='challenge-pager'>
         {pager}
-        <div>Active: {this.props.active}</div>
       </div>
     )
   }

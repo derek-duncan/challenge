@@ -28,24 +28,14 @@ export default class Carder extends React.Component {
   onChange() {
     this.setState(getCarderState());
   }
-  renderChildren() {
-    let children = React.Children.map(this.props.children, (child, i) => {
-      i = i + 1;
-      if (i === this.state.activeCard) {
-        return React.cloneElement(child, {
-          active: true
-        });
-      } else {
-        return child;
-      }
-    });
-    return children;
-  }
   render() {
     let numberOfCards = this.props.children.props.children.length;
+    let renderedChildren = React.Children.map(this.props.children, (child, i) => {
+      return this.state.activeCard == (i + 1) ? React.cloneElement(child, { active: this.state.activeCard }) : child;
+    });
     return (
       <div className='challenge-cards'>
-        {this.renderChildren()}
+        {renderedChildren}
         <CarderPager size={numberOfCards} active={this.state.activeCard} />
       </div>
     )
