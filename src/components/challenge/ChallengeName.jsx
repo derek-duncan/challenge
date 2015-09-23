@@ -7,7 +7,7 @@ import React from 'react';
 
 // Stores
 
-export default class Name extends React.Component {
+export default class ChallengeName extends React.Component {
   constructor(props) {
     super(props);
     this.toggleInput = this.toggleInput.bind(this);
@@ -29,6 +29,6 @@ export default class Name extends React.Component {
   }
 }
 
-Name.defaultProps = {
+ChallengeName.defaultProps = {
   name: ''
 };

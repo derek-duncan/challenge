@@ -4,8 +4,12 @@
 import React from 'react';
 
 // Components
-import Name from './Name.jsx';
+import ChallengeName from './ChallengeName.jsx';
 import Card from './Card.jsx';
+import CardName from './CardName.jsx';
+import CardContent from './CardContent.jsx';
+import CardEnd from './CardEnd.jsx';
+import Carder from './Carder.jsx';
 
 export default class Challenge extends React.Component {
   constructor(props) {
@@ -21,12 +25,20 @@ export default class Challenge extends React.Component {
       <div id='challenge'>
         <div className='challenge-details'>
           <p className='challenge-tagline'>Goal</p>
-          <Name name='Test Challenge' />
+          <ChallengeName name='Test Challenge' />
           <input className='challenge-url' type='text' ref='url' value={this.props.url} onClick={this.selectUrl} />
         </div>
-        <div className='challenge-cards'>
-          <Card step={this.props.step} />
-        </div>
+        <Carder>
+          <Card>
+            <CardName name={this.props.step.name} />
+            <CardContent>
+              <p>Random text here</p>
+            </CardContent>
+            <CardEnd>
+              <button>Open</button>
+            </CardEnd>
+          </Card>
+        </Carder>
       </div>
     )
   }
@@ -35,6 +47,8 @@ export default class Challenge extends React.Component {
 Challenge.defaultProps = {
   url: 'http://challen.ge/192381',
   step: {
-    name: 'How long will it take?'
+    name: 'How long will it take?',
+    content: '30 min',
+    action: 'Open'
   }
 };

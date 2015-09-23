@@ -3,17 +3,16 @@
 // Modules
 import React from 'react';
 
-export default class Card extends React.Component {
+export default class CardEnd extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    let className = 'card';
-    if (this.props.active) className += ' active';
     return (
-      <div className={className}>
+      <div className='card-end'>
         {this.props.children}
       </div>
     )
   }
 }
+
