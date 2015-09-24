@@ -12,6 +12,7 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
@@ -114,6 +115,8 @@ html, body {
 }
 
 .carder-viewer {
+  width: 100%;
+  overflow: hidden;
 }
 
 .carder-container {
@@ -177,8 +180,9 @@ html, body {
   vertical-align: middle;
   border-radius: 50%;
   margin: 0 0.5rem;
+  outline: none;
   transition: background-color 0.3s, color 0.3s;
-  &.active, &:hover {
+  &.active {
     background-color: var(--darkgrey);
     color: var(--grey);
   }

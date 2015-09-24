@@ -11,6 +11,9 @@ export default class CarderPager extends React.Component {
   constructor(props) {
     super(props);
   }
+  componentWillMount() {
+    React.initializeTouchEvents(true);
+  }
   handleClick(e) {
     let index = e.target.dataset.index;
     CarderActions.setCard(index);
@@ -24,7 +27,7 @@ export default class CarderPager extends React.Component {
         'pager-item': true,
         'active': i == this.props.active
       });
-      pager.push(<span className={classes} data-index={i} key={i} onClick={this.handleClick}>{i}</span>);
+      pager.push(<span className={classes} data-index={i} key={i} onTouchStart={this.handleClick}>{i}</span>);
       ++i;
     }
     return (

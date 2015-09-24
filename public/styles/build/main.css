@@ -429,6 +429,7 @@ th {
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html, body {
@@ -545,6 +546,8 @@ html, body {
 }
 
 .carder-viewer {
+  width: 100%;
+  overflow: hidden;
 }
 
 .carder-container {
@@ -612,11 +615,12 @@ html, body {
   vertical-align: middle;
   border-radius: 50%;
   margin: 0 0.5rem;
+  outline: none;
   -webkit-transition: background-color 0.3s, color 0.3s;
           transition: background-color 0.3s, color 0.3s;
 }
 
-.pager-item.active, .pager-item:hover {
+.pager-item.active {
   background-color: #AAAAAA;
   color: #DFDFDF;
 }

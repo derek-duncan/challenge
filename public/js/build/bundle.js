@@ -28072,6 +28072,11 @@
 	  }
 
 	  _createClass(CarderPager, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _react2['default'].initializeTouchEvents(true);
+	    }
+	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(e) {
 	      var index = e.target.dataset.index;
@@ -28090,7 +28095,7 @@
 	        });
 	        pager.push(_react2['default'].createElement(
 	          'span',
-	          { className: classes, 'data-index': i, key: i, onClick: this.handleClick },
+	          { className: classes, 'data-index': i, key: i, onTouchStart: this.handleClick },
 	          i
 	        ));
 	        ++i;
