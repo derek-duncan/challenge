@@ -21,30 +21,34 @@ export default class Carder extends React.Component {
     super(props);
     this.state = getCarderState();
 
-    let numberOfCards = React.Children.count(this.props.children);
-    CarderActions.setNumberOfCards(numberOfCards);
-
     this.onChange = this.onChange.bind(this);
   }
   componentDidMount() {
     CarderStore.listen(this.onChange);
+    CarderActions.setNumberOfCards(React.Children.count(this.props.children));
   }
   componentWillUnmount() {
     CarderStore.unlisten(this.onChange);
   }
   onChange() {
     this.setState(getCarderState());
-    console.log(this.state);
   }
   render() {
     let renderedChildren = React.Children.map(this.props.children, (child, i) => {
-      return React.cloneElement(child, { active: this.state.activeCard, index: i + 1 });
+      return React.cloneElement(child, {
+        active: this.state.activeCard,
+        index: i + 1,
+        cardWidth: this.state.cardWidth
+      });
     });
-    console.log(this.state.styles);
+    let styles = {
+      transform: `translateX(-${this.state.offset}%)`,
+      width: `${this.state.containerWidth}%`
+    };
     return (
       <div className='challenge-carder'>
         <div className='carder-viewer'>
-          <div className='carder-container' style={this.state.styles}>
+          <div className='carder-container' style={styles}>
             {renderedChildren}
           </div>
         </div>

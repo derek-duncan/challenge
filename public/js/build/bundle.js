@@ -27479,6 +27479,29 @@
 	                'Open'
 	              )
 	            )
+	          ),
+	          _react2['default'].createElement(
+	            _CardJsx2['default'],
+	            null,
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Another crazy card :)' }),
+	            _react2['default'].createElement(
+	              _CardContentJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'p',
+	                null,
+	                'Random text here'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              _CardEndJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'button',
+	                null,
+	                'Open'
+	              )
+	            )
 	          )
 	        )
 	      );
@@ -27613,9 +27636,15 @@
 	    value: function render() {
 	      var className = 'card';
 	      if (this.props.active == this.props.index) className += ' active';
+	      var margin = 5;
+	      var styles = {
+	        width: this.props.cardWidth - margin * 2 + '%',
+	        marginLeft: 5 + '%',
+	        marginRight: 5 + '%'
+	      };
 	      return _react2['default'].createElement(
 	        'div',
-	        { 'data-index': this.props.index, className: className },
+	        { 'data-index': this.props.index, key: this.props.index, className: className, style: styles },
 	        this.props.children
 	      );
 	    }
@@ -27836,9 +27865,6 @@
 	    _get(Object.getPrototypeOf(Carder.prototype), 'constructor', this).call(this, props);
 	    this.state = getCarderState();
 
-	    var numberOfCards = _react2['default'].Children.count(this.props.children);
-	    _actionsCarderActions2['default'].setNumberOfCards(numberOfCards);
-
 	    this.onChange = this.onChange.bind(this);
 	  }
 
@@ -27846,6 +27872,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _storesCarderStore2['default'].listen(this.onChange);
+	      _actionsCarderActions2['default'].setNumberOfCards(_react2['default'].Children.count(this.props.children));
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -27856,7 +27883,6 @@
 	    key: 'onChange',
 	    value: function onChange() {
 	      this.setState(getCarderState());
-	      console.log(this.state);
 	    }
 	  }, {
 	    key: 'render',
@@ -27864,9 +27890,16 @@
 	      var _this = this;
 
 	      var renderedChildren = _react2['default'].Children.map(this.props.children, function (child, i) {
-	        return _react2['default'].cloneElement(child, { active: _this.state.activeCard, index: i + 1 });
+	        return _react2['default'].cloneElement(child, {
+	          active: _this.state.activeCard,
+	          index: i + 1,
+	          cardWidth: _this.state.cardWidth
+	        });
 	      });
-	      console.log(this.state.styles);
+	      var styles = {
+	        transform: 'translateX(-' + this.state.offset + '%)',
+	        width: this.state.containerWidth + '%'
+	      };
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: 'challenge-carder' },
@@ -27875,7 +27908,7 @@
 	          { className: 'carder-viewer' },
 	          _react2['default'].createElement(
 	            'div',
-	            { className: 'carder-container', style: this.state.styles },
+	            { className: 'carder-container', style: styles },
 	            renderedChildren
 	          )
 	        ),
@@ -27920,21 +27953,25 @@
 
 	    this.bindActions(_actionsCarderActions2['default']);
 
-	    this.numberOfCards = 1;
+	    this.numberOfCards;
 	    this.activeCard = 1;
-	    this.styles = {};
+	    this.cardWidth = 0;
+	    this.containerWidth = 100;
+	    this.offset = 0;
 	  }
 
 	  _createClass(CarderStore, [{
 	    key: 'setActiveCard',
 	    value: function setActiveCard(index) {
 	      this.activeCard = index;
-	      this.styles.marginLeft = this.getOffset();
+	      this.offset = (index - 1) * this.cardWidth;
 	    }
 	  }, {
 	    key: 'onSetNumberOfCards',
 	    value: function onSetNumberOfCards(number) {
 	      this.numberOfCards = number;
+	      this.cardWidth = parseFloat(100 / Number(this.numberOfCards), 10).toFixed(3);
+	      this.containerWidth = 100 * Number(this.numberOfCards);
 	    }
 	  }, {
 	    key: 'onSetCard',
@@ -27950,11 +27987,6 @@
 	    key: 'onNextCard',
 	    value: function onNextCard() {
 	      this.activeCard += 1;
-	    }
-	  }, {
-	    key: 'getOffset',
-	    value: function getOffset() {
-	      return -(100 / Number(this.numberOfCards)) + '%';
 	    }
 	  }]);
 
@@ -28016,6 +28048,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(245);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	// Actions
 
 	var _actionsCarderActions = __webpack_require__(243);
@@ -28044,9 +28080,13 @@
 	      var pager = [];
 	      var i = 1;
 	      while (i <= pagerSize) {
+	        var classes = (0, _classnames2['default'])({
+	          'pager-item': true,
+	          'active': i == this.props.active
+	        });
 	        pager.push(_react2['default'].createElement(
 	          'span',
-	          { 'data-index': i, key: i, onClick: this.handleClick },
+	          { className: classes, 'data-index': i, key: i, onClick: this.handleClick },
 	          i
 	        ));
 	        ++i;
@@ -28068,6 +28108,61 @@
 	  size: 1
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+
+	(function () {
+		'use strict';
+
+		function classNames () {
+
+			var classes = '';
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if ('string' === argType || 'number' === argType) {
+					classes += ' ' + arg;
+
+				} else if (Array.isArray(arg)) {
+					classes += ' ' + classNames.apply(null, arg);
+
+				} else if ('object' === argType) {
+					for (var key in arg) {
+						if (arg.hasOwnProperty(key) && arg[key]) {
+							classes += ' ' + key;
+						}
+					}
+				}
+			}
+
+			return classes.substr(1);
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true){
+			// AMD. Register as an anonymous module.
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+
+	}());
+
 
 /***/ }
 /******/ ]);
