@@ -541,7 +541,7 @@ html, body {
 }
 
 #challenge .challenge-pager {
-  margin: 1rem 0 0;
+  margin: 0.5rem 0 0;
 }
 
 .carder-viewer {
@@ -560,15 +560,11 @@ html, body {
   vertical-align: middle;
   background: #fff;
   box-shadow: 0px 1px 0px 0px #E2E2E2;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 2rem 0;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #DFDFDF;
   -webkit-transition: border 0.3s;
           transition: border 0.3s;
-}
-
-.card.active {
-  border-bottom: 2px solid #27D5AE;
 }
 
 .card .card-name {
@@ -577,9 +573,37 @@ html, body {
   font-size: 1.5em;
   font-weight: 600;
 }
+.card-board {
+  width: 100%;
+  background-color: #27D5AE;
+  color: #fff;
+  padding: 0.5rem 0;
+  margin: 1.5rem 0;
+  border-top: 4px solid #1DA385;
+  border-bottom: 4px solid #1DA385;
+}
+.card-end button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #27D5AE;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 600;
+  padding: 0.3rem 1.5rem;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  -webkit-transition: background-color 0.3s;
+          transition: background-color 0.3s;
+}
+.card-end button:active, .card-end button:hover {
+  background-color: #1DA385;
+}
 
 .pager-item {
   background-color: #DFDFDF;
+  color: #fff;
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -588,12 +612,13 @@ html, body {
   vertical-align: middle;
   border-radius: 50%;
   margin: 0 0.5rem;
-  -webkit-transition: background-color 0.3s;
-          transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s, color 0.3s;
+          transition: background-color 0.3s, color 0.3s;
 }
 
 .pager-item.active, .pager-item:hover {
   background-color: #AAAAAA;
+  color: #DFDFDF;
 }
 
 .input {

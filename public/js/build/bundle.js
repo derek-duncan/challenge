@@ -27465,9 +27465,13 @@
 	              _CardContentJsx2['default'],
 	              null,
 	              _react2['default'].createElement(
-	                'p',
-	                null,
-	                'Random text here'
+	                'div',
+	                { className: 'card-board' },
+	                _react2['default'].createElement(
+	                  'p',
+	                  null,
+	                  'Random text here'
+	                )
 	              )
 	            ),
 	            _react2['default'].createElement(

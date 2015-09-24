@@ -41,7 +41,9 @@ export default class Challenge extends React.Component {
           <Card>
             <CardName name='Invite friends' />
             <CardContent>
-              <p>Random text here</p>
+              <div className='card-board'>
+                <p>Random text here</p>
+              </div>
             </CardContent>
             <CardEnd>
               <button>Open</button>
