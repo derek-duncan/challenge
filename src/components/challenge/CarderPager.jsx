@@ -19,7 +19,7 @@ export default class CarderPager extends React.Component {
     let pager = [];
     let i = 1;
     while (i <= pagerSize) {
-      pager.push(<span data-index={i} onClick={this.handleClick}>{i}</span>);
+      pager.push(<span data-index={i} key={i} onClick={this.handleClick}>{i}</span>);
       ++i;
     }
     return (

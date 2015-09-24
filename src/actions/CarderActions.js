@@ -5,7 +5,8 @@ class CarderActions {
     this.generateActions(
       'nextCard',
       'previousCard',
-      'setCard'
+      'setCard',
+      'setNumberOfCards'
     );
   }
 }

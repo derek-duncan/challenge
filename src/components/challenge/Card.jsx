@@ -9,9 +9,9 @@ export default class Card extends React.Component {
   }
   render() {
     let className = 'card';
-    if (this.props.active) className += ' active';
+    if (this.props.active == this.props.index) className += ' active';
     return (
-      <div className={className}>
+      <div data-index={this.props.index} className={className}>
         {this.props.children}
       </div>
     )

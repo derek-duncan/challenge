@@ -27456,6 +27456,29 @@
 	                'Open'
 	              )
 	            )
+	          ),
+	          _react2['default'].createElement(
+	            _CardJsx2['default'],
+	            null,
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Invite friends' }),
+	            _react2['default'].createElement(
+	              _CardContentJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'p',
+	                null,
+	                'Random text here'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              _CardEndJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'button',
+	                null,
+	                'Open'
+	              )
+	            )
 	          )
 	        )
 	      );
@@ -27589,10 +27612,10 @@
 	    key: 'render',
 	    value: function render() {
 	      var className = 'card';
-	      if (this.props.active) className += ' active';
+	      if (this.props.active == this.props.index) className += ' active';
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: className },
+	        { 'data-index': this.props.index, className: className },
 	        this.props.children
 	      );
 	    }
@@ -27794,6 +27817,12 @@
 
 	var _CarderPagerJsx2 = _interopRequireDefault(_CarderPagerJsx);
 
+	// Actions
+
+	var _actionsCarderActions = __webpack_require__(243);
+
+	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
+
 	function getCarderState() {
 	  return _storesCarderStore2['default'].getState();
 	}
@@ -27806,6 +27835,10 @@
 
 	    _get(Object.getPrototypeOf(Carder.prototype), 'constructor', this).call(this, props);
 	    this.state = getCarderState();
+
+	    var numberOfCards = _react2['default'].Children.count(this.props.children);
+	    _actionsCarderActions2['default'].setNumberOfCards(numberOfCards);
+
 	    this.onChange = this.onChange.bind(this);
 	  }
 
@@ -27823,21 +27856,30 @@
 	    key: 'onChange',
 	    value: function onChange() {
 	      this.setState(getCarderState());
+	      console.log(this.state);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this = this;
 
-	      var numberOfCards = this.props.children.props.children.length;
 	      var renderedChildren = _react2['default'].Children.map(this.props.children, function (child, i) {
-	        return _this.state.activeCard == i + 1 ? _react2['default'].cloneElement(child, { active: _this.state.activeCard }) : child;
+	        return _react2['default'].cloneElement(child, { active: _this.state.activeCard, index: i + 1 });
 	      });
+	      console.log(this.state.styles);
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'challenge-cards' },
-	        renderedChildren,
-	        _react2['default'].createElement(_CarderPagerJsx2['default'], { size: numberOfCards, active: this.state.activeCard })
+	        { className: 'challenge-carder' },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'carder-viewer' },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'carder-container', style: this.state.styles },
+	            renderedChildren
+	          )
+	        ),
+	        _react2['default'].createElement(_CarderPagerJsx2['default'], { size: this.state.numberOfCards, active: this.state.activeCard })
 	      );
 	    }
 	  }]);
@@ -27878,13 +27920,21 @@
 
 	    this.bindActions(_actionsCarderActions2['default']);
 
+	    this.numberOfCards = 1;
 	    this.activeCard = 1;
+	    this.styles = {};
 	  }
 
 	  _createClass(CarderStore, [{
 	    key: 'setActiveCard',
 	    value: function setActiveCard(index) {
 	      this.activeCard = index;
+	      this.styles.marginLeft = this.getOffset();
+	    }
+	  }, {
+	    key: 'onSetNumberOfCards',
+	    value: function onSetNumberOfCards(number) {
+	      this.numberOfCards = number;
 	    }
 	  }, {
 	    key: 'onSetCard',
@@ -27900,6 +27950,11 @@
 	    key: 'onNextCard',
 	    value: function onNextCard() {
 	      this.activeCard += 1;
+	    }
+	  }, {
+	    key: 'getOffset',
+	    value: function getOffset() {
+	      return -(100 / Number(this.numberOfCards)) + '%';
 	    }
 	  }]);
 
@@ -27930,7 +27985,7 @@
 	var CarderActions = function CarderActions() {
 	  _classCallCheck(this, CarderActions);
 
-	  this.generateActions('nextCard', 'previousCard', 'setCard');
+	  this.generateActions('nextCard', 'previousCard', 'setCard', 'setNumberOfCards');
 	};
 
 	exports['default'] = _alt2['default'].createActions(CarderActions);
@@ -27991,7 +28046,7 @@
 	      while (i <= pagerSize) {
 	        pager.push(_react2['default'].createElement(
 	          'span',
-	          { 'data-index': i, onClick: this.handleClick },
+	          { 'data-index': i, key: i, onClick: this.handleClick },
 	          i
 	        ));
 	        ++i;

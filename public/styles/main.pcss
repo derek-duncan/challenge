@@ -103,7 +103,7 @@ html, body {
       color: #333;
     }
   }
-  .challenge-cards {
+  .challenge-carder {
     margin: 2rem 0;
     text-align: center;
   }
@@ -111,13 +111,14 @@ html, body {
 
 .card {
   text-align: center;
-  width: 70%;
+  width: 50%;
   display: inline-block;
   background: #fff;
   box-shadow: 0px 1px 0px 0px #E2E2E2;
   border-radius: 4px;
   padding: 2rem 0;
   border-bottom: 2px solid #fff;
+  transition: border 0.3s;
   &.active {
     border-bottom: 2px solid var(--main);
   }
@@ -127,6 +128,16 @@ html, body {
     font-size: 1.5em;
     font-weight: 600;
   }
+}
+
+.carder-viewer {
+  width: 80%;
+  margin-left: 10%;
+  overflow: hidden;
+}
+
+.carder-container {
+  width: 200%;
 }
 
 .input {

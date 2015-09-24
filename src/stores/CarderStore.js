@@ -5,10 +5,16 @@ class CarderStore {
   constructor() {
     this.bindActions(CarderActions);
 
+    this.numberOfCards = 1;
     this.activeCard = 1;
+    this.styles = {};
   }
   setActiveCard(index) {
     this.activeCard = index;
+    this.styles.marginLeft = this.getOffset();
+  }
+  onSetNumberOfCards(number) {
+    this.numberOfCards = number;
   }
   onSetCard(index) {
     this.setActiveCard(index);
@@ -18,6 +24,9 @@ class CarderStore {
   }
   onNextCard() {
     this.activeCard += 1;
+  }
+  getOffset() {
+    return -(100 / Number(this.numberOfCards)) + '%';
   }
 }
 
