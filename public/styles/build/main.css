@@ -550,6 +550,7 @@ html, body {
   width: auto;
   -webkit-transition: -webkit-transform 0.3s ease-in-out;
           transition: transform 0.3s ease-in-out;
+  text-align: left;
 }
 
 .card {
@@ -557,11 +558,25 @@ html, body {
   width: 50%;
   display: inline-block;
   vertical-align: top;
+  -webkit-transition: -webkit-transform 0.3s;
+          transition: transform 0.3s;
+}
+
+.card.inactive {
+  -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9);
+          transform: scale(0.9);
+}
+
+.card.active {
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
 }
 
 .card .card-inner {
   margin: 0 auto;
-  width: 80%;
+  width: 90%;
   background: #fff;
   box-shadow: 0px 1px 0px 0px #E2E2E2;
   border-radius: 8px;
@@ -692,8 +707,8 @@ html, body {
 
 .loader .loader-content.show {
   display: block;
-  -webkit-animation: 1s bounce;
-          animation: 1s bounce;
+  -webkit-animation: 1s bounce forwards;
+          animation: 1s bounce forwards;
 }
 
 @-webkit-keyframes bounce {

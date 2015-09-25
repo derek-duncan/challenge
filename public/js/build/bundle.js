@@ -27842,6 +27842,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(233);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	var Card = (function (_React$Component) {
 	  _inherits(Card, _React$Component);
 
@@ -27854,14 +27858,18 @@
 	  _createClass(Card, [{
 	    key: 'render',
 	    value: function render() {
-	      var className = 'card';
-	      if (this.props.active == this.props.index) className += ' active';
+	      var isActive = this.props.active == this.props.cardNumber;
+	      var classes = (0, _classnames2['default'])({
+	        'card': true,
+	        'active': isActive,
+	        'inactive': !isActive
+	      });
 	      var styles = {
 	        width: this.props.cardWidth + '%'
 	      };
 	      return _react2['default'].createElement(
 	        'div',
-	        { 'data-index': this.props.index, key: this.props.index, className: className, style: styles },
+	        { 'data-index': this.props.cardNumber, key: this.props.cardNumber, className: classes, style: styles },
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'card-inner' },
@@ -28112,13 +28120,13 @@
 
 	      var renderedChildren = _react2['default'].Children.map(this.props.children, function (child, i) {
 	        return _react2['default'].cloneElement(child, {
-	          active: _this.state.activeCard,
-	          index: i + 1,
-	          cardWidth: _this.state.cardWidth
+	          active: _this.state.activeCardNumber,
+	          cardNumber: i + 1,
+	          cardWidth: _this.state.cardRealWidth
 	        });
 	      });
 	      var styles = {
-	        transform: 'translateX(-' + this.state.offset + '%)',
+	        transform: 'translateX(' + -this.state.containerViewOffset + '%)',
 	        width: this.state.containerWidth + '%'
 	      };
 	      return _react2['default'].createElement(
@@ -28133,7 +28141,7 @@
 	            renderedChildren
 	          )
 	        ),
-	        _react2['default'].createElement(_CarderPagerJsx2['default'], { size: this.state.numberOfCards, active: this.state.activeCard })
+	        _react2['default'].createElement(_CarderPagerJsx2['default'], { size: this.state.numberOfCards, active: this.state.activeCardNumber })
 	      );
 	    }
 	  }]);
@@ -28175,39 +28183,47 @@
 	    this.bindActions(_actionsCarderActions2['default']);
 
 	    this.numberOfCards;
-	    this.activeCard = 1;
-	    this.cardWidth = 0;
+	    this.activeCardNumber = 1;
+
+	    this.cardFullWidth = 0;
+	    this.cardRealWidth = 0;
+	    this.cardWidthOffset = 8;
+
 	    this.containerWidth = 100;
-	    this.offset = 0;
+	    this.containerViewOffset = -(this.cardWidthOffset / 2);
 	  }
 
 	  _createClass(CarderStore, [{
 	    key: 'setActiveCard',
-	    value: function setActiveCard(index) {
-	      this.activeCard = index;
-	      this.offset = (index - 1) * this.cardWidth;
+	    value: function setActiveCard(cardNumber) {
+	      var cardWidthOffsetCenter = this.cardWidthOffset / 2;
+	      var index = cardNumber - 1;
+
+	      this.activeCardNumber = cardNumber;
+	      this.containerViewOffset = index * this.cardRealWidth - cardWidthOffsetCenter;
 	    }
 	  }, {
 	    key: 'onSetNumberOfCards',
 	    value: function onSetNumberOfCards(number) {
 	      this.numberOfCards = number;
-	      this.cardWidth = parseFloat(100 / Number(this.numberOfCards), 10).toFixed(3);
+	      this.cardFullWidth = parseFloat(100 / Number(this.numberOfCards), 10).toFixed(3);
+	      this.cardRealWidth = this.cardFullWidth - this.cardWidthOffset;
 	      this.containerWidth = 100 * Number(this.numberOfCards);
 	    }
 	  }, {
 	    key: 'onSetCard',
-	    value: function onSetCard(index) {
-	      this.setActiveCard(index);
+	    value: function onSetCard(cardNumber) {
+	      this.setActiveCard(cardNumber);
 	    }
 	  }, {
 	    key: 'onPreviousCard',
 	    value: function onPreviousCard() {
-	      this.activeCard -= 1;
+	      this.activeCardNumber -= 1;
 	    }
 	  }, {
 	    key: 'onNextCard',
 	    value: function onNextCard() {
-	      this.activeCard += 1;
+	      this.activeCardNumber += 1;
 	    }
 	  }]);
 

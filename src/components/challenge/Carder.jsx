@@ -36,13 +36,13 @@ export default class Carder extends React.Component {
   render() {
     let renderedChildren = React.Children.map(this.props.children, (child, i) => {
       return React.cloneElement(child, {
-        active: this.state.activeCard,
-        index: i + 1,
-        cardWidth: this.state.cardWidth
+        active: this.state.activeCardNumber,
+        cardNumber: i + 1,
+        cardWidth: this.state.cardRealWidth
       });
     });
     let styles = {
-      transform: `translateX(-${this.state.offset}%)`,
+      transform: `translateX(${-this.state.containerViewOffset}%)`,
       width: `${this.state.containerWidth}%`
     };
     return (
@@ -52,7 +52,7 @@ export default class Carder extends React.Component {
             {renderedChildren}
           </div>
         </div>
-        <CarderPager size={this.state.numberOfCards} active={this.state.activeCard} />
+        <CarderPager size={this.state.numberOfCards} active={this.state.activeCardNumber} />
       </div>
     )
   }
