@@ -27328,7 +27328,7 @@
 	      return _react2['default'].createElement(
 	        'h2',
 	        { className: 'page-title' },
-	        _react2['default'].createElement('i', { className: 'fa fa-chevron-right' }),
+	        _react2['default'].createElement('i', { className: 'fa fa-location-arrow' }),
 	        ' ',
 	        this.props.pageTitle
 	      );
