@@ -27496,12 +27496,35 @@
 	              _CardContentJsx2['default'],
 	              null,
 	              _react2['default'].createElement(
-	                'div',
+	                'ul',
 	                { className: 'card-board' },
 	                _react2['default'].createElement(
-	                  'p',
-	                  null,
-	                  'Random text here'
+	                  'li',
+	                  { className: 'board-item' },
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section item-section--dark' },
+	                    '1'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section' },
+	                    'Random text here'
+	                  )
+	                ),
+	                _react2['default'].createElement(
+	                  'li',
+	                  { className: 'board-item' },
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section item-section--dark' },
+	                    '2'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section' },
+	                    'More text here'
+	                  )
 	                )
 	              )
 	            ),

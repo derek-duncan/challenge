@@ -579,9 +579,29 @@ html, body {
   width: 100%;
   background-color: #27D5AE;
   color: #fff;
-  padding: 1.5rem 0;
+  padding: 0.5rem 0;
+  margin: 0;
   border-top: 4px solid #1DA385;
   border-bottom: 4px solid #1DA385;
+  text-align: left;
+}
+.board-item {
+  display: table;
+  width: 100%;
+  padding: 0 1.5rem 0.75rem;
+}
+.board-item:last-child {
+  padding-bottom: 0;
+}
+.board-item .item-section {
+  display: table-cell;
+  vertical-align: middle;
+}
+.board-item .item-section:first-child {
+  width: 10%;
+}
+.board-item .item-section.item-section--dark {
+  color: #1DA385;
 }
 .card-end {
   padding: 1.5rem 0;

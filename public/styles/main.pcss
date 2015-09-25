@@ -157,9 +157,29 @@ html, body {
   width: 100%;
   background-color: var(--main);
   color: #fff;
-  padding: var(--card-spacing) 0;
+  padding: 0.5rem 0;
+  margin: 0;
   border-top: 4px solid var(--shade);
   border-bottom: 4px solid var(--shade);
+  text-align: left;
+}
+.board-item {
+  display: table;
+  width: 100%;
+  padding: 0 var(--card-spacing) 0.75rem;
+  &:last-child {
+    padding-bottom: 0;
+  }
+  .item-section {
+    display: table-cell;
+    vertical-align: middle;
+    &:first-child {
+      width: 10%;
+    }
+    &.item-section--dark {
+      color: var(--shade);
+    }
+  }
 }
 .card-end {
   padding: var(--card-spacing) 0;
