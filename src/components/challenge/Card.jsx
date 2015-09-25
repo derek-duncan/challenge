@@ -10,15 +10,14 @@ export default class Card extends React.Component {
   render() {
     let className = 'card';
     if (this.props.active == this.props.index) className += ' active';
-    let margin = 5;
     let styles = {
-      width: `${this.props.cardWidth - (margin * 2)}%`,
-      marginLeft: `${5}%`,
-      marginRight: `${5}%`
+      width: `${this.props.cardWidth}%`,
     };
     return (
       <div data-index={this.props.index} key={this.props.index} className={className} style={styles}>
-        {this.props.children}
+        <div className='card-inner'>
+          {this.props.children}
+        </div>
       </div>
     )
   }

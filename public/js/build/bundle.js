@@ -27372,29 +27372,35 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	// Stores
+
+	var _storesChallengeStore = __webpack_require__(236);
+
+	var _storesChallengeStore2 = _interopRequireDefault(_storesChallengeStore);
+
 	// Components
 
-	var _ChallengeNameJsx = __webpack_require__(236);
+	var _ChallengeNameJsx = __webpack_require__(238);
 
 	var _ChallengeNameJsx2 = _interopRequireDefault(_ChallengeNameJsx);
 
-	var _CardJsx = __webpack_require__(237);
+	var _CardJsx = __webpack_require__(239);
 
 	var _CardJsx2 = _interopRequireDefault(_CardJsx);
 
-	var _CardNameJsx = __webpack_require__(238);
+	var _CardNameJsx = __webpack_require__(240);
 
 	var _CardNameJsx2 = _interopRequireDefault(_CardNameJsx);
 
-	var _CardContentJsx = __webpack_require__(239);
+	var _CardContentJsx = __webpack_require__(241);
 
 	var _CardContentJsx2 = _interopRequireDefault(_CardContentJsx);
 
-	var _CardEndJsx = __webpack_require__(240);
+	var _CardEndJsx = __webpack_require__(242);
 
 	var _CardEndJsx2 = _interopRequireDefault(_CardEndJsx);
 
-	var _CarderJsx = __webpack_require__(241);
+	var _CarderJsx = __webpack_require__(243);
 
 	var _CarderJsx2 = _interopRequireDefault(_CarderJsx);
 
@@ -27405,14 +27411,39 @@
 	    _classCallCheck(this, Challenge);
 
 	    _get(Object.getPrototypeOf(Challenge.prototype), 'constructor', this).call(this, props);
+	    this.state = Object.assign({}, _storesChallengeStore2['default'].getState(), {
+	      url: 'http://challen.ge/192381',
+	      step: {
+	        name: 'How long will it take?',
+	        content: '30 min',
+	        action: 'Open'
+	      }
+	    });
+
 	    this.selectUrl = this.selectUrl.bind(this);
+	    this.onChange = this.onChange.bind(this);
 	  }
 
 	  _createClass(Challenge, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      _storesChallengeStore2['default'].listen(this.onChange);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      _storesChallengeStore2['default'].unlisten(this.onChange);
+	    }
+	  }, {
 	    key: 'selectUrl',
 	    value: function selectUrl(e) {
 	      e.preventDefault();
 	      _react2['default'].findDOMNode(this.refs.url).setSelectionRange(0, 1000);
+	    }
+	  }, {
+	    key: 'onChange',
+	    value: function onChange(state) {
+	      this.setState(state);
 	    }
 	  }, {
 	    key: 'render',
@@ -27428,8 +27459,8 @@
 	            { className: 'challenge-tagline' },
 	            'Goal'
 	          ),
-	          _react2['default'].createElement(_ChallengeNameJsx2['default'], { name: 'Test Challenge' }),
-	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.props.url, onClick: this.selectUrl })
+	          _react2['default'].createElement(_ChallengeNameJsx2['default'], { name: this.state.challengeName }),
+	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.state.url, onClick: this.selectUrl })
 	        ),
 	        _react2['default'].createElement(
 	          _CarderJsx2['default'],
@@ -27437,7 +27468,7 @@
 	          _react2['default'].createElement(
 	            _CardJsx2['default'],
 	            null,
-	            _react2['default'].createElement(_CardNameJsx2['default'], { name: this.props.step.name }),
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: this.state.step.name }),
 	            _react2['default'].createElement(
 	              _CardContentJsx2['default'],
 	              null,
@@ -27516,19 +27547,83 @@
 	})(_react2['default'].Component);
 
 	exports['default'] = Challenge;
-
-	Challenge.defaultProps = {
-	  url: 'http://challen.ge/192381',
-	  step: {
-	    name: 'How long will it take?',
-	    content: '30 min',
-	    action: 'Open'
-	  }
-	};
 	module.exports = exports['default'];
 
 /***/ },
 /* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _alt = __webpack_require__(218);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	var _actionsChallengeActions = __webpack_require__(237);
+
+	var _actionsChallengeActions2 = _interopRequireDefault(_actionsChallengeActions);
+
+	var ChallengeStore = (function () {
+	  function ChallengeStore() {
+	    _classCallCheck(this, ChallengeStore);
+
+	    this.bindActions(_actionsChallengeActions2['default']);
+
+	    this.challengeName = 'Test Name';
+	  }
+
+	  _createClass(ChallengeStore, [{
+	    key: 'onSetName',
+	    value: function onSetName(name) {
+	      this.challengeName = name;
+	    }
+	  }]);
+
+	  return ChallengeStore;
+	})();
+
+	exports['default'] = _alt2['default'].createStore(ChallengeStore, 'ChallengeStore');
+	module.exports = exports['default'];
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	var _alt = __webpack_require__(218);
+
+	var _alt2 = _interopRequireDefault(_alt);
+
+	var ChallengeActions = function ChallengeActions() {
+	  _classCallCheck(this, ChallengeActions);
+
+	  this.generateActions('setName');
+	};
+
+	exports['default'] = _alt2['default'].createActions(ChallengeActions);
+	module.exports = exports['default'];
+
+/***/ },
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27554,6 +27649,10 @@
 
 	// Actions
 
+	var _actionsChallengeActions = __webpack_require__(237);
+
+	var _actionsChallengeActions2 = _interopRequireDefault(_actionsChallengeActions);
+
 	// Stores
 
 	var ChallengeName = (function (_React$Component) {
@@ -27564,6 +27663,8 @@
 
 	    _get(Object.getPrototypeOf(ChallengeName.prototype), 'constructor', this).call(this, props);
 	    this.toggleInput = this.toggleInput.bind(this);
+	    this.handleChange = this.handleChange.bind(this);
+	    this.handleKeyDown = this.handleKeyDown.bind(this);
 	  }
 
 	  _createClass(ChallengeName, [{
@@ -27574,6 +27675,20 @@
 	      text.classList.toggle('hide');
 	      input.classList.toggle('show');
 	      input.focus();
+	      input.selectionStart = input.selectionEnd = input.value.length;
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
+	      var value = e.target.value;
+	      _actionsChallengeActions2['default'].setName(value);
+	    }
+	  }, {
+	    key: 'handleKeyDown',
+	    value: function handleKeyDown(e) {
+	      if (e.keyCode == 13) {
+	        e.target.blur();
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -27586,7 +27701,7 @@
 	          { className: 'name-text', ref: 'text', onClick: this.toggleInput },
 	          this.props.name
 	        ),
-	        _react2['default'].createElement('input', { className: 'name-input input hide', ref: 'input', onBlur: this.toggleInput, defaultValue: this.props.name })
+	        _react2['default'].createElement('input', { className: 'name-input input hide', ref: 'input', onBlur: this.toggleInput, onChange: this.handleChange, onKeyDown: this.handleKeyDown, defaultValue: this.props.name })
 	      );
 	    }
 	  }]);
@@ -27602,7 +27717,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27640,16 +27755,17 @@
 	    value: function render() {
 	      var className = 'card';
 	      if (this.props.active == this.props.index) className += ' active';
-	      var margin = 5;
 	      var styles = {
-	        width: this.props.cardWidth - margin * 2 + '%',
-	        marginLeft: 5 + '%',
-	        marginRight: 5 + '%'
+	        width: this.props.cardWidth + '%'
 	      };
 	      return _react2['default'].createElement(
 	        'div',
 	        { 'data-index': this.props.index, key: this.props.index, className: className, style: styles },
-	        this.props.children
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'card-inner' },
+	          this.props.children
+	        )
 	      );
 	    }
 	  }]);
@@ -27661,7 +27777,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27712,7 +27828,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27763,7 +27879,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27814,7 +27930,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27840,19 +27956,19 @@
 
 	// Stores
 
-	var _storesCarderStore = __webpack_require__(242);
+	var _storesCarderStore = __webpack_require__(244);
 
 	var _storesCarderStore2 = _interopRequireDefault(_storesCarderStore);
 
 	// Components
 
-	var _CarderPagerJsx = __webpack_require__(244);
+	var _CarderPagerJsx = __webpack_require__(246);
 
 	var _CarderPagerJsx2 = _interopRequireDefault(_CarderPagerJsx);
 
 	// Actions
 
-	var _actionsCarderActions = __webpack_require__(243);
+	var _actionsCarderActions = __webpack_require__(245);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -27928,7 +28044,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27947,7 +28063,7 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _actionsCarderActions = __webpack_require__(243);
+	var _actionsCarderActions = __webpack_require__(245);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -28001,7 +28117,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28028,7 +28144,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28052,13 +28168,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(245);
+	var _classnames = __webpack_require__(247);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	// Actions
 
-	var _actionsCarderActions = __webpack_require__(243);
+	var _actionsCarderActions = __webpack_require__(245);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -28119,7 +28235,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!

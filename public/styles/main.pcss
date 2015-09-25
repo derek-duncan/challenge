@@ -6,6 +6,8 @@
   --main: #27D5AE;
   --shade: #1DA385;
   --dark: #404040;
+
+  --card-spacing: 1.5rem;
 }
 
 @import 'normalize.css';
@@ -54,64 +56,65 @@ html, body {
 }
 
 #challenge {
-  .challenge-details {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
+}
+
+.challenge-details {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+.challenge-tagline {
+  font-size: 1rem;
+  color: var(--darkgrey);
+  padding: 0;
+  margin: 0;
+}
+.challenge-name {
+  margin: 0.1rem 0 0.75rem;
+  .name-text, .name-input {
+    font-size: 1.75em;
+    font-weight: 600;
+
+    &.hide {
+      display: none;
+    }
+    &.show {
+      display: block;
+    }
   }
-  .challenge-tagline {
-    font-size: 1.1rem;
-    color: var(--darkgrey);
-    padding: 0;
+  .name-text {
+    display: inline-block;
     margin: 0;
+    padding: 0 0 0.2rem;
+    background-image: linear-gradient(to right, var(--darkgrey) 33%, var(--lightgrey) 0%);
+    background-position: bottom;
+    background-size: 10px 2px;
+    background-repeat: repeat-x;
   }
-  .challenge-name {
-    margin: 0.1rem 0 1.25rem;
-    .name-text, .name-input {
-      font-size: 1.75em;
-      font-weight: 600;
-
-      &.hide {
-        display: none;
-      }
-      &.show {
-        display: block;
-      }
-    }
-    .name-text {
-      display: inline-block;
-      margin: 0;
-      padding: 0 0 0.2rem;
-      background-image: linear-gradient(to right, var(--darkgrey) 33%, var(--lightgrey) 0%);
-      background-position: bottom;
-      background-size: 10px 2px;
-      background-repeat: repeat-x;
-    }
-    .name-input {
-      width: 100%;
-      text-align: center;
-    }
-  }
-  .challenge-url {
-    background-color: var(--grey);
-    color: var(--darkgrey);
-    border: none;
-    border-radius: 2rem;
-    padding: 0.3rem 1rem;
-    outline: none;
-    transition: background-color 0.3s, color 0.3s;
-    &:focus {
-      color: #333;
-    }
-  }
-  .challenge-carder {
-    margin: 2rem 0;
+  .name-input {
+    width: 100%;
     text-align: center;
   }
-
-  .challenge-pager {
-    margin: 0.5rem 0 0;
+}
+.challenge-url {
+  background-color: var(--grey);
+  color: var(--darkgrey);
+  border: none;
+  border-radius: 2rem;
+  padding: 0.3rem 1rem;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+  &:focus {
+    color: #333;
   }
+}
+.challenge-carder {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.challenge-pager {
+  margin: 1rem 0 0;
 }
 
 .carder-viewer {
@@ -128,30 +131,38 @@ html, body {
   text-align: center;
   width: 50%;
   display: inline-block;
-  vertical-align: middle;
-  background: #fff;
-  box-shadow: 0px 1px 0px 0px #E2E2E2;
-  border-radius: 8px;
-  padding: 2rem 0;
-  border-bottom: 2px solid var(--grey);
-  transition: border 0.3s;
-  .card-name {
-    width: 90%;
+  vertical-align: top;
+  .card-inner {
     margin: 0 auto;
-    font-size: 1.5em;
-    font-weight: 600;
+    width: 80%;
+    background: #fff;
+    box-shadow: 0px 1px 0px 0px #E2E2E2;
+    border-radius: 8px;
+    border-bottom: 2px solid var(--grey);
+    transition: border 0.3s;
+  }
+}
+.card-name {
+  margin: 0 var(--card-spacing);
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: var(--card-spacing) 0;
+}
+.card-content {
+  p:last-child {
+    margin: 0;
   }
 }
 .card-board {
   width: 100%;
   background-color: var(--main);
   color: #fff;
-  padding: 0.5rem 0;
-  margin: 1.5rem 0;
+  padding: var(--card-spacing) 0;
   border-top: 4px solid var(--shade);
   border-bottom: 4px solid var(--shade);
 }
 .card-end {
+  padding: var(--card-spacing) 0;
   button {
     appearance: none;
     background-color: var(--main);

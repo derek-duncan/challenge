@@ -3,6 +3,9 @@
 // Modules
 import React from 'react';
 
+// Stores
+import ChallengeStore from '../../stores/ChallengeStore';
+
 // Components
 import ChallengeName from './ChallengeName.jsx';
 import Card from './Card.jsx';
@@ -14,23 +17,42 @@ import Carder from './Carder.jsx';
 export default class Challenge extends React.Component {
   constructor(props) {
     super(props);
+    this.state = Object.assign({}, ChallengeStore.getState(), {
+      url: 'http://challen.ge/192381',
+      step: {
+        name: 'How long will it take?',
+        content: '30 min',
+        action: 'Open'
+      }
+    });
+
     this.selectUrl = this.selectUrl.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+  componentDidMount() {
+    ChallengeStore.listen(this.onChange);
+  }
+  componentWillUnmount() {
+    ChallengeStore.unlisten(this.onChange);
   }
   selectUrl(e) {
     e.preventDefault();
     React.findDOMNode(this.refs.url).setSelectionRange(0, 1000);
+  }
+  onChange(state) {
+    this.setState(state);
   }
   render() {
     return (
       <div id='challenge'>
         <div className='challenge-details'>
           <p className='challenge-tagline'>Goal</p>
-          <ChallengeName name='Test Challenge' />
-          <input className='challenge-url' type='text' ref='url' value={this.props.url} onClick={this.selectUrl} />
+          <ChallengeName name={this.state.challengeName} />
+          <input className='challenge-url' type='text' ref='url' value={this.state.url} onClick={this.selectUrl} />
         </div>
         <Carder>
           <Card>
-            <CardName name={this.props.step.name} />
+            <CardName name={this.state.step.name} />
             <CardContent>
               <p>Random text here</p>
             </CardContent>
@@ -63,12 +85,3 @@ export default class Challenge extends React.Component {
     )
   }
 }
-
-Challenge.defaultProps = {
-  url: 'http://challen.ge/192381',
-  step: {
-    name: 'How long will it take?',
-    content: '30 min',
-    action: 'Open'
-  }
-};
