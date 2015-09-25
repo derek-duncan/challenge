@@ -25440,7 +25440,7 @@
 
 	var _componentsAppJsx2 = _interopRequireDefault(_componentsAppJsx);
 
-	var _pagesHomeJsx = __webpack_require__(234);
+	var _pagesHomeJsx = __webpack_require__(235);
 
 	var _pagesHomeJsx2 = _interopRequireDefault(_pagesHomeJsx);
 
@@ -27170,13 +27170,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(233);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	// Actions
 
 	// Stores
 
 	// Components
 
-	var _HeaderTitleJsx = __webpack_require__(233);
+	var _HeaderTitleJsx = __webpack_require__(234);
 
 	var _HeaderTitleJsx2 = _interopRequireDefault(_HeaderTitleJsx);
 
@@ -27192,6 +27196,10 @@
 	  _createClass(Header, [{
 	    key: 'render',
 	    value: function render() {
+	      var pageClasses = (0, _classnames2['default'])({
+	        'header-page': true,
+	        'hide': !this.props.pageTitle
+	      });
 	      return _react2['default'].createElement(
 	        'header',
 	        { id: 'header' },
@@ -27211,7 +27219,7 @@
 	        ),
 	        _react2['default'].createElement(
 	          'div',
-	          { className: 'header-page' },
+	          { className: pageClasses },
 	          _react2['default'].createElement(_HeaderTitleJsx2['default'], { pageTitle: this.props.pageTitle })
 	        )
 	      );
@@ -27226,6 +27234,61 @@
 
 /***/ },
 /* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+
+	(function () {
+		'use strict';
+
+		function classNames () {
+
+			var classes = '';
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if ('string' === argType || 'number' === argType) {
+					classes += ' ' + arg;
+
+				} else if (Array.isArray(arg)) {
+					classes += ' ' + classNames.apply(null, arg);
+
+				} else if ('object' === argType) {
+					for (var key in arg) {
+						if (arg.hasOwnProperty(key) && arg[key]) {
+							classes += ' ' + key;
+						}
+					}
+				}
+			}
+
+			return classes.substr(1);
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true){
+			// AMD. Register as an anonymous module.
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+
+	}());
+
+
+/***/ },
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27277,7 +27340,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27310,7 +27373,7 @@
 
 	// Components
 
-	var _componentsChallengeChallengeJsx = __webpack_require__(235);
+	var _componentsChallengeChallengeJsx = __webpack_require__(236);
 
 	var _componentsChallengeChallengeJsx2 = _interopRequireDefault(_componentsChallengeChallengeJsx);
 
@@ -27348,7 +27411,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27374,35 +27437,39 @@
 
 	// Stores
 
-	var _storesChallengeStore = __webpack_require__(236);
+	var _storesChallengeStore = __webpack_require__(237);
 
 	var _storesChallengeStore2 = _interopRequireDefault(_storesChallengeStore);
 
 	// Components
 
-	var _ChallengeNameJsx = __webpack_require__(238);
+	var _ChallengeNameJsx = __webpack_require__(239);
 
 	var _ChallengeNameJsx2 = _interopRequireDefault(_ChallengeNameJsx);
 
-	var _CardJsx = __webpack_require__(239);
+	var _CardJsx = __webpack_require__(240);
 
 	var _CardJsx2 = _interopRequireDefault(_CardJsx);
 
-	var _CardNameJsx = __webpack_require__(240);
+	var _CardNameJsx = __webpack_require__(241);
 
 	var _CardNameJsx2 = _interopRequireDefault(_CardNameJsx);
 
-	var _CardContentJsx = __webpack_require__(241);
+	var _CardContentJsx = __webpack_require__(242);
 
 	var _CardContentJsx2 = _interopRequireDefault(_CardContentJsx);
 
-	var _CardEndJsx = __webpack_require__(242);
+	var _CardEndJsx = __webpack_require__(243);
 
 	var _CardEndJsx2 = _interopRequireDefault(_CardEndJsx);
 
-	var _CarderJsx = __webpack_require__(243);
+	var _CarderJsx = __webpack_require__(244);
 
 	var _CarderJsx2 = _interopRequireDefault(_CarderJsx);
+
+	var _LoaderJsx = __webpack_require__(248);
+
+	var _LoaderJsx2 = _interopRequireDefault(_LoaderJsx);
 
 	var Challenge = (function (_React$Component) {
 	  _inherits(Challenge, _React$Component);
@@ -27417,7 +27484,8 @@
 	        name: 'How long will it take?',
 	        content: '30 min',
 	        action: 'Open'
-	      }
+	      },
+	      loading: true
 	    });
 
 	    this.selectUrl = this.selectUrl.bind(this);
@@ -27428,6 +27496,9 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _storesChallengeStore2['default'].listen(this.onChange);
+	      this.setState({
+	        loading: false
+	      });
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -27463,101 +27534,105 @@
 	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.state.url, onClick: this.selectUrl })
 	        ),
 	        _react2['default'].createElement(
-	          _CarderJsx2['default'],
-	          null,
+	          _LoaderJsx2['default'],
+	          { isLoading: this.state.loading },
 	          _react2['default'].createElement(
-	            _CardJsx2['default'],
+	            _CarderJsx2['default'],
 	            null,
-	            _react2['default'].createElement(_CardNameJsx2['default'], { name: this.state.step.name }),
 	            _react2['default'].createElement(
-	              _CardContentJsx2['default'],
+	              _CardJsx2['default'],
 	              null,
+	              _react2['default'].createElement(_CardNameJsx2['default'], { name: this.state.step.name }),
 	              _react2['default'].createElement(
-	                'p',
+	                _CardContentJsx2['default'],
 	                null,
-	                'Random text here'
-	              )
-	            ),
-	            _react2['default'].createElement(
-	              _CardEndJsx2['default'],
-	              null,
+	                _react2['default'].createElement(
+	                  'p',
+	                  null,
+	                  'Random text here'
+	                )
+	              ),
 	              _react2['default'].createElement(
-	                'button',
+	                _CardEndJsx2['default'],
 	                null,
-	                'Open'
-	              )
-	            )
-	          ),
-	          _react2['default'].createElement(
-	            _CardJsx2['default'],
-	            null,
-	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Invite friends' }),
-	            _react2['default'].createElement(
-	              _CardContentJsx2['default'],
-	              null,
-	              _react2['default'].createElement(
-	                'ul',
-	                { className: 'card-board' },
 	                _react2['default'].createElement(
-	                  'li',
-	                  { className: 'board-item' },
-	                  _react2['default'].createElement(
-	                    'span',
-	                    { className: 'item-section item-section--dark' },
-	                    '1'
-	                  ),
-	                  _react2['default'].createElement(
-	                    'span',
-	                    { className: 'item-section' },
-	                    'Random text here'
-	                  )
-	                ),
-	                _react2['default'].createElement(
-	                  'li',
-	                  { className: 'board-item' },
-	                  _react2['default'].createElement(
-	                    'span',
-	                    { className: 'item-section item-section--dark' },
-	                    '2'
-	                  ),
-	                  _react2['default'].createElement(
-	                    'span',
-	                    { className: 'item-section' },
-	                    'More text here'
-	                  )
+	                  'button',
+	                  null,
+	                  'Open'
 	                )
 	              )
 	            ),
 	            _react2['default'].createElement(
-	              _CardEndJsx2['default'],
+	              _CardJsx2['default'],
 	              null,
+	              _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Invite friends' }),
 	              _react2['default'].createElement(
-	                'button',
+	                _CardContentJsx2['default'],
 	                null,
-	                'Open'
-	              )
-	            )
-	          ),
-	          _react2['default'].createElement(
-	            _CardJsx2['default'],
-	            null,
-	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Another crazy card :)' }),
-	            _react2['default'].createElement(
-	              _CardContentJsx2['default'],
-	              null,
+	                _react2['default'].createElement(
+	                  'ul',
+	                  { className: 'card-board' },
+	                  _react2['default'].createElement(
+	                    'li',
+	                    { className: 'board-item' },
+	                    _react2['default'].createElement(
+	                      'span',
+	                      { className: 'item-section item-section--dark' },
+	                      '1'
+	                    ),
+	                    _react2['default'].createElement(
+	                      'span',
+	                      { className: 'item-section' },
+	                      'Random text here'
+	                    )
+	                  ),
+	                  _react2['default'].createElement(
+	                    'li',
+	                    { className: 'board-item' },
+	                    _react2['default'].createElement(
+	                      'span',
+	                      { className: 'item-section item-section--dark' },
+	                      '2'
+	                    ),
+	                    _react2['default'].createElement(
+	                      'span',
+	                      { className: 'item-section' },
+	                      'More text here'
+	                    )
+	                  )
+	                )
+	              ),
 	              _react2['default'].createElement(
-	                'p',
+	                _CardEndJsx2['default'],
 	                null,
-	                'Random text here'
+	                _react2['default'].createElement(
+	                  'button',
+	                  null,
+	                  'Open'
+	                )
 	              )
 	            ),
 	            _react2['default'].createElement(
-	              _CardEndJsx2['default'],
+	              _CardJsx2['default'],
 	              null,
+	              _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Another crazy card :)' }),
 	              _react2['default'].createElement(
-	                'button',
+	                _CardContentJsx2['default'],
 	                null,
-	                'Open'
+	                _react2['default'].createElement(
+	                  'p',
+	                  null,
+	                  'Random text here'
+	                )
+	              ),
+	              _react2['default'].createElement(
+	                _CardEndJsx2['default'],
+	                null,
+	                _react2['default'].createElement(
+	                  'button',
+	                  null,
+	                  'Open'
+	                )
 	              )
 	            )
 	          )
@@ -27573,7 +27648,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27592,7 +27667,7 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _actionsChallengeActions = __webpack_require__(237);
+	var _actionsChallengeActions = __webpack_require__(238);
 
 	var _actionsChallengeActions2 = _interopRequireDefault(_actionsChallengeActions);
 
@@ -27619,7 +27694,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27646,7 +27721,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27672,7 +27747,7 @@
 
 	// Actions
 
-	var _actionsChallengeActions = __webpack_require__(237);
+	var _actionsChallengeActions = __webpack_require__(238);
 
 	var _actionsChallengeActions2 = _interopRequireDefault(_actionsChallengeActions);
 
@@ -27740,7 +27815,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27800,7 +27875,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27851,7 +27926,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27902,7 +27977,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27953,7 +28028,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27979,19 +28054,19 @@
 
 	// Stores
 
-	var _storesCarderStore = __webpack_require__(244);
+	var _storesCarderStore = __webpack_require__(245);
 
 	var _storesCarderStore2 = _interopRequireDefault(_storesCarderStore);
 
 	// Components
 
-	var _CarderPagerJsx = __webpack_require__(246);
+	var _CarderPagerJsx = __webpack_require__(247);
 
 	var _CarderPagerJsx2 = _interopRequireDefault(_CarderPagerJsx);
 
 	// Actions
 
-	var _actionsCarderActions = __webpack_require__(245);
+	var _actionsCarderActions = __webpack_require__(246);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -28067,7 +28142,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28086,7 +28161,7 @@
 
 	var _alt2 = _interopRequireDefault(_alt);
 
-	var _actionsCarderActions = __webpack_require__(245);
+	var _actionsCarderActions = __webpack_require__(246);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -28140,7 +28215,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28167,7 +28242,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28191,13 +28266,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(247);
+	var _classnames = __webpack_require__(233);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	// Actions
 
-	var _actionsCarderActions = __webpack_require__(245);
+	var _actionsCarderActions = __webpack_require__(246);
 
 	var _actionsCarderActions2 = _interopRequireDefault(_actionsCarderActions);
 
@@ -28258,59 +28333,84 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2015 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
+	'use strict';
 
-	(function () {
-		'use strict';
+	// Modules
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 
-		function classNames () {
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-			var classes = '';
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
-				var argType = typeof arg;
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-				if ('string' === argType || 'number' === argType) {
-					classes += ' ' + arg;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-				} else if (Array.isArray(arg)) {
-					classes += ' ' + classNames.apply(null, arg);
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-				} else if ('object' === argType) {
-					for (var key in arg) {
-						if (arg.hasOwnProperty(key) && arg[key]) {
-							classes += ' ' + key;
-						}
-					}
-				}
-			}
+	var _react = __webpack_require__(5);
 
-			return classes.substr(1);
-		}
+	var _react2 = _interopRequireDefault(_react);
 
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true){
-			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
+	var _classnames = __webpack_require__(233);
 
-	}());
+	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var Loader = (function (_React$Component) {
+	  _inherits(Loader, _React$Component);
+
+	  function Loader(props) {
+	    _classCallCheck(this, Loader);
+
+	    _get(Object.getPrototypeOf(Loader.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Loader, [{
+	    key: 'render',
+	    value: function render() {
+	      var spinnerClasses = (0, _classnames2['default'])({
+	        'loader-spinner': true,
+	        'show': this.props.isLoading,
+	        'hide': !this.props.isLoading
+	      });
+	      var contentClasses = (0, _classnames2['default'])({
+	        'loader-content': true,
+	        'show': !this.props.isLoading,
+	        'hide': this.props.isLoading
+	      });
+	      return _react2['default'].createElement(
+	        'div',
+	        _extends({ className: 'loader' }, this.props),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: spinnerClasses },
+	          'Loading...'
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: contentClasses },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Loader;
+	})(_react2['default'].Component);
+
+	exports['default'] = Loader;
+
+	Loader.defaultProps = {
+	  loading: false
+	};
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

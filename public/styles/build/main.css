@@ -460,7 +460,16 @@ html, body {
 
 #header .header-page {
   background: #DFDFDF;
-  padding: 0.5rem 1rem;
+  height: 40px;
+  opacity: 1;
+  -webkit-transition: height 0.3s, opacity 0.3s;
+          transition: height 0.3s, opacity 0.3s;
+  overflow: hidden;
+}
+
+#header .header-page.hide {
+  height: 0;
+  opacity: 0;
 }
 
 #header .page-title {
@@ -468,7 +477,7 @@ html, body {
   font-weight: 600;
   color: #AAAAAA;
   margin: 0;
-  padding: 0;
+  padding: 0.5rem 1rem;
 }
 
 #content {
@@ -670,4 +679,18 @@ html, body {
 
 .button:active {
   background-color: #1DA385;
+}
+
+.loader .loader-spinner.hide, .loader .loader-content.hide {
+  display: none;
+}
+
+.loader .loader-spinner.show, .loader .loader-content.show {
+  display: block;
+}
+
+.loader .loader-spinner {
+}
+
+.loader .loader-content {
 }

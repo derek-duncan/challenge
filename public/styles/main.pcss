@@ -40,14 +40,21 @@ html, body {
   }
   .header-page {
     background: var(--grey);
-    padding: 0.5rem 1rem;
+    height: 40px;
+    opacity: 1;
+    transition: height 0.3s, opacity 0.3s;
+    overflow: hidden;
+    &.hide {
+      height: 0;
+      opacity: 0;
+    }
   }
   .page-title {
     font-size: 1em;
     font-weight: 600;
     color: var(--darkgrey);
     margin: 0;
-    padding: 0;
+    padding: 0.5rem 1rem;
   }
 }
 
@@ -239,5 +246,20 @@ html, body {
   outline: none;
   &:active {
     background-color: var(--shade);
+  }
+}
+
+.loader {
+  .loader-spinner, .loader-content {
+    &.hide {
+      display: none;
+    }
+    &.show {
+      display: block;
+    }
+  }
+  .loader-spinner {
+  }
+  .loader-content {
   }
 }
