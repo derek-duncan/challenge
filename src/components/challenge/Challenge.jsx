@@ -46,7 +46,6 @@ export default class Challenge extends React.Component {
     return (
       <div id='challenge'>
         <div className='challenge-details'>
-          <p className='challenge-tagline'>Goal</p>
           <ChallengeName name={this.state.challengeName} />
           <input className='challenge-url' type='text' ref='url' value={this.state.url} onClick={this.selectUrl} />
         </div>

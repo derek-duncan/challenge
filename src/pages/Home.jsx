@@ -16,7 +16,7 @@ export default class Home extends React.Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      AppActions.setPageTitle('Home');
+      AppActions.setPageTitle('New Challenge');
       this.setState({
         loading: false
       });

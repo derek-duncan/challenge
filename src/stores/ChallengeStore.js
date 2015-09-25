@@ -5,7 +5,7 @@ class ChallengeStore {
   constructor() {
     this.bindActions(ChallengeActions);
 
-    this.challengeName = 'Test Name';
+    this.challengeName = 'Challenge Name';
   }
   onSetName(name) {
     this.challengeName = name;

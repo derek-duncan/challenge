@@ -27328,6 +27328,8 @@
 	      return _react2['default'].createElement(
 	        'h2',
 	        { className: 'page-title' },
+	        _react2['default'].createElement('i', { className: 'fa fa-chevron-right' }),
+	        ' ',
 	        this.props.pageTitle
 	      );
 	    }
@@ -27398,7 +27400,7 @@
 	      var _this = this;
 
 	      setTimeout(function () {
-	        _actionsAppActions2['default'].setPageTitle('Home');
+	        _actionsAppActions2['default'].setPageTitle('New Challenge');
 	        _this.setState({
 	          loading: false
 	        });
@@ -27532,11 +27534,6 @@
 	        _react2['default'].createElement(
 	          'div',
 	          { className: 'challenge-details' },
-	          _react2['default'].createElement(
-	            'p',
-	            { className: 'challenge-tagline' },
-	            'Goal'
-	          ),
 	          _react2['default'].createElement(_ChallengeNameJsx2['default'], { name: this.state.challengeName }),
 	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.state.url, onClick: this.selectUrl })
 	        ),
@@ -27680,7 +27677,7 @@
 
 	    this.bindActions(_actionsChallengeActions2['default']);
 
-	    this.challengeName = 'Test Name';
+	    this.challengeName = 'Challenge Name';
 	  }
 
 	  _createClass(ChallengeStore, [{
@@ -27748,6 +27745,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames = __webpack_require__(233);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	// Actions
 
 	var _actionsChallengeActions = __webpack_require__(238);
@@ -27763,20 +27764,34 @@
 	    _classCallCheck(this, ChallengeName);
 
 	    _get(Object.getPrototypeOf(ChallengeName.prototype), 'constructor', this).call(this, props);
-	    this.toggleInput = this.toggleInput.bind(this);
+	    this.state = {};
+	    this.state.isEditing = false;
+	    this.showInput = this.showInput.bind(this);
+	    this.hideInput = this.hideInput.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
 	    this.handleKeyDown = this.handleKeyDown.bind(this);
 	  }
 
 	  _createClass(ChallengeName, [{
-	    key: 'toggleInput',
-	    value: function toggleInput() {
-	      var text = _react2['default'].findDOMNode(this.refs.text);
-	      var input = _react2['default'].findDOMNode(this.refs.input);
-	      text.classList.toggle('hide');
-	      input.classList.toggle('show');
-	      input.focus();
-	      input.selectionStart = input.selectionEnd = input.value.length;
+	    key: 'showInput',
+	    value: function showInput() {
+	      var _this = this;
+
+	      this.setState({
+	        isEditing: true
+	      }, function () {
+	        var text = _react2['default'].findDOMNode(_this.refs.text);
+	        var input = _react2['default'].findDOMNode(_this.refs.input);
+	        input.focus();
+	        input.selectionStart = input.selectionEnd = input.value.length;
+	      });
+	    }
+	  }, {
+	    key: 'hideInput',
+	    value: function hideInput() {
+	      this.setState({
+	        isEditing: false
+	      });
 	    }
 	  }, {
 	    key: 'handleChange',
@@ -27794,15 +27809,30 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var challengeClasses = (0, _classnames2['default'])({
+	        'challenge-name': true,
+	        'editing': this.state.isEditing
+	      });
+	      var textClasses = (0, _classnames2['default'])({
+	        'name-text': true,
+	        'hide': this.state.isEditing,
+	        'show': !this.state.isEditing
+	      });
+	      var inputClasses = (0, _classnames2['default'])({
+	        'name-input': true,
+	        'input': true,
+	        'hide': !this.state.isEditing,
+	        'show': this.state.isEditing
+	      });
 	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'challenge-name' },
+	        { className: challengeClasses },
 	        _react2['default'].createElement(
 	          'h4',
-	          { className: 'name-text', ref: 'text', onClick: this.toggleInput },
+	          { className: textClasses, ref: 'text', key: 'text', onClick: this.showInput },
 	          this.props.name
 	        ),
-	        _react2['default'].createElement('input', { className: 'name-input input hide', ref: 'input', onBlur: this.toggleInput, onChange: this.handleChange, onKeyDown: this.handleKeyDown, defaultValue: this.props.name })
+	        _react2['default'].createElement('input', { className: inputClasses, ref: 'input', key: 'input', onBlur: this.hideInput, onChange: this.handleChange, onKeyDown: this.handleKeyDown, defaultValue: this.props.name })
 	      );
 	    }
 	  }]);
