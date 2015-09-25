@@ -27377,6 +27377,10 @@
 
 	var _componentsChallengeChallengeJsx2 = _interopRequireDefault(_componentsChallengeChallengeJsx);
 
+	var _componentsLoaderJsx = __webpack_require__(248);
+
+	var _componentsLoaderJsx2 = _interopRequireDefault(_componentsLoaderJsx);
+
 	var Home = (function (_React$Component) {
 	  _inherits(Home, _React$Component);
 
@@ -27384,13 +27388,20 @@
 	    _classCallCheck(this, Home);
 
 	    _get(Object.getPrototypeOf(Home.prototype), 'constructor', this).call(this, props);
+	    this.state = {};
+	    this.state.loading = true;
 	  }
 
 	  _createClass(Home, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this = this;
+
 	      setTimeout(function () {
 	        _actionsAppActions2['default'].setPageTitle('Home');
+	        _this.setState({
+	          loading: false
+	        });
 	      }, 0);
 	    }
 	  }, {
@@ -27399,7 +27410,11 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { id: 'home' },
-	        _react2['default'].createElement(_componentsChallengeChallengeJsx2['default'], null)
+	        _react2['default'].createElement(
+	          _componentsLoaderJsx2['default'],
+	          { isLoading: this.state.loading },
+	          _react2['default'].createElement(_componentsChallengeChallengeJsx2['default'], null)
+	        )
 	      );
 	    }
 	  }]);
@@ -27467,10 +27482,6 @@
 
 	var _CarderJsx2 = _interopRequireDefault(_CarderJsx);
 
-	var _LoaderJsx = __webpack_require__(248);
-
-	var _LoaderJsx2 = _interopRequireDefault(_LoaderJsx);
-
 	var Challenge = (function (_React$Component) {
 	  _inherits(Challenge, _React$Component);
 
@@ -27484,8 +27495,7 @@
 	        name: 'How long will it take?',
 	        content: '30 min',
 	        action: 'Open'
-	      },
-	      loading: true
+	      }
 	    });
 
 	    this.selectUrl = this.selectUrl.bind(this);
@@ -27496,9 +27506,6 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      _storesChallengeStore2['default'].listen(this.onChange);
-	      this.setState({
-	        loading: false
-	      });
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -27534,105 +27541,101 @@
 	          _react2['default'].createElement('input', { className: 'challenge-url', type: 'text', ref: 'url', value: this.state.url, onClick: this.selectUrl })
 	        ),
 	        _react2['default'].createElement(
-	          _LoaderJsx2['default'],
-	          { isLoading: this.state.loading },
+	          _CarderJsx2['default'],
+	          null,
 	          _react2['default'].createElement(
-	            _CarderJsx2['default'],
+	            _CardJsx2['default'],
 	            null,
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: this.state.step.name }),
 	            _react2['default'].createElement(
-	              _CardJsx2['default'],
+	              _CardContentJsx2['default'],
 	              null,
-	              _react2['default'].createElement(_CardNameJsx2['default'], { name: this.state.step.name }),
 	              _react2['default'].createElement(
-	                _CardContentJsx2['default'],
+	                'p',
 	                null,
-	                _react2['default'].createElement(
-	                  'p',
-	                  null,
-	                  'Random text here'
-	                )
-	              ),
-	              _react2['default'].createElement(
-	                _CardEndJsx2['default'],
-	                null,
-	                _react2['default'].createElement(
-	                  'button',
-	                  null,
-	                  'Open'
-	                )
+	                'Random text here'
 	              )
 	            ),
 	            _react2['default'].createElement(
-	              _CardJsx2['default'],
+	              _CardEndJsx2['default'],
 	              null,
-	              _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Invite friends' }),
 	              _react2['default'].createElement(
-	                _CardContentJsx2['default'],
+	                'button',
 	                null,
+	                'Open'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _CardJsx2['default'],
+	            null,
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Invite friends' }),
+	            _react2['default'].createElement(
+	              _CardContentJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'ul',
+	                { className: 'card-board' },
 	                _react2['default'].createElement(
-	                  'ul',
-	                  { className: 'card-board' },
+	                  'li',
+	                  { className: 'board-item' },
 	                  _react2['default'].createElement(
-	                    'li',
-	                    { className: 'board-item' },
-	                    _react2['default'].createElement(
-	                      'span',
-	                      { className: 'item-section item-section--dark' },
-	                      '1'
-	                    ),
-	                    _react2['default'].createElement(
-	                      'span',
-	                      { className: 'item-section' },
-	                      'Random text here'
-	                    )
+	                    'span',
+	                    { className: 'item-section item-section--dark' },
+	                    '1'
 	                  ),
 	                  _react2['default'].createElement(
-	                    'li',
-	                    { className: 'board-item' },
-	                    _react2['default'].createElement(
-	                      'span',
-	                      { className: 'item-section item-section--dark' },
-	                      '2'
-	                    ),
-	                    _react2['default'].createElement(
-	                      'span',
-	                      { className: 'item-section' },
-	                      'More text here'
-	                    )
+	                    'span',
+	                    { className: 'item-section' },
+	                    'Random text here'
 	                  )
-	                )
-	              ),
-	              _react2['default'].createElement(
-	                _CardEndJsx2['default'],
-	                null,
+	                ),
 	                _react2['default'].createElement(
-	                  'button',
-	                  null,
-	                  'Open'
+	                  'li',
+	                  { className: 'board-item' },
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section item-section--dark' },
+	                    '2'
+	                  ),
+	                  _react2['default'].createElement(
+	                    'span',
+	                    { className: 'item-section' },
+	                    'More text here'
+	                  )
 	                )
 	              )
 	            ),
 	            _react2['default'].createElement(
-	              _CardJsx2['default'],
+	              _CardEndJsx2['default'],
 	              null,
-	              _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Another crazy card :)' }),
 	              _react2['default'].createElement(
-	                _CardContentJsx2['default'],
+	                'button',
 	                null,
-	                _react2['default'].createElement(
-	                  'p',
-	                  null,
-	                  'Random text here'
-	                )
-	              ),
+	                'Open'
+	              )
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _CardJsx2['default'],
+	            null,
+	            _react2['default'].createElement(_CardNameJsx2['default'], { name: 'Another crazy card :)' }),
+	            _react2['default'].createElement(
+	              _CardContentJsx2['default'],
+	              null,
 	              _react2['default'].createElement(
-	                _CardEndJsx2['default'],
+	                'p',
 	                null,
-	                _react2['default'].createElement(
-	                  'button',
-	                  null,
-	                  'Open'
-	                )
+	                'Random text here'
+	              )
+	            ),
+	            _react2['default'].createElement(
+	              _CardEndJsx2['default'],
+	              null,
+	              _react2['default'].createElement(
+	                'button',
+	                null,
+	                'Open'
 	              )
 	            )
 	          )

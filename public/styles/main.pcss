@@ -40,13 +40,8 @@ html, body {
   }
   .header-page {
     background: var(--grey);
-    height: 40px;
-    opacity: 1;
-    transition: height 0.3s, opacity 0.3s;
-    overflow: hidden;
     &.hide {
-      height: 0;
-      opacity: 0;
+      display: none;
     }
   }
   .page-title {
@@ -251,6 +246,8 @@ html, body {
 
 .loader {
   .loader-spinner, .loader-content {
+  }
+  .loader-spinner {
     &.hide {
       display: none;
     }
@@ -258,8 +255,19 @@ html, body {
       display: block;
     }
   }
-  .loader-spinner {
-  }
   .loader-content {
+    &.hide {
+      display: none;
+    }
+    &.show {
+      display: block;
+      animation: 1s bounce;
+    }
   }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  10% {transform: translateY(-20px);}
+  30% {transform: translateY(-10px);}
 }
