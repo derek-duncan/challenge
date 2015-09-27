@@ -8,6 +8,7 @@ import CarderStore from '../../stores/CarderStore';
 
 // Components
 import CarderPager from './CarderPager.jsx';
+import Hammer from 'react-hammerjs';
 
 // Actions
 import CarderActions from '../../actions/CarderActions';
@@ -21,7 +22,12 @@ export default class Carder extends React.Component {
     super(props);
     this.state = getCarderState();
 
+    this.xDown = null;
     this.onChange = this.onChange.bind(this);
+    this.handleSwipe = this.handleSwipe.bind(this);
+  }
+  componentWillMount() {
+    React.initializeTouchEvents(true);
   }
   componentDidMount() {
     CarderStore.listen(this.onChange);
@@ -33,6 +39,13 @@ export default class Carder extends React.Component {
   onChange() {
     this.setState(getCarderState());
   }
+  handleSwipe(e) {
+    if (e.direction === 4) { // right
+      CarderActions.previousCard();
+    } else if (e.direction === 2) { // left
+      CarderActions.nextCard();
+    }
+  };
   render() {
     let renderedChildren = React.Children.map(this.props.children, (child, i) => {
       return React.cloneElement(child, {
@@ -48,9 +61,11 @@ export default class Carder extends React.Component {
     return (
       <div className='challenge-carder'>
         <div className='carder-viewer'>
-          <div className='carder-container' style={styles}>
-            {renderedChildren}
-          </div>
+          <Hammer onSwipe={this.handleSwipe}>
+            <div className='carder-container' style={styles}>
+              {renderedChildren}
+            </div>
+          </Hammer>
         </div>
         <CarderPager size={this.state.numberOfCards} active={this.state.activeCardNumber} />
       </div>

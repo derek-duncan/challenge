@@ -9,9 +9,6 @@ import ChallengeStore from '../../stores/ChallengeStore';
 // Components
 import ChallengeName from './ChallengeName.jsx';
 import Card from './Card.jsx';
-import CardName from './CardName.jsx';
-import CardContent from './CardContent.jsx';
-import CardEnd from './CardEnd.jsx';
 import Carder from './Carder.jsx';
 
 export default class Challenge extends React.Component {
@@ -26,7 +23,7 @@ export default class Challenge extends React.Component {
       }
     });
 
-    this.selectUrl = this.selectUrl.bind(this);
+    this.handleURLFocus = this.handleURLFocus.bind(this);
     this.onChange = this.onChange.bind(this);
   }
   componentDidMount() {
@@ -35,7 +32,7 @@ export default class Challenge extends React.Component {
   componentWillUnmount() {
     ChallengeStore.unlisten(this.onChange);
   }
-  selectUrl(e) {
+  handleURLFocus(e) {
     e.preventDefault();
     React.findDOMNode(this.refs.url).setSelectionRange(0, 1000);
   }
@@ -47,21 +44,24 @@ export default class Challenge extends React.Component {
       <div id='challenge'>
         <div className='challenge-details'>
           <ChallengeName name={this.state.challengeName} />
-          <input className='challenge-url' type='text' ref='url' value={this.state.url} onClick={this.selectUrl} />
+          <input className='challenge-url' type='text' ref='url' value={this.state.url} onClick={this.handleURLFocus} />
         </div>
         <Carder>
           <Card>
-            <CardName name={this.state.step.name} />
-            <CardContent>
+            <h4 className='card-name'>{this.state.step.name}</h4>
+            <div className='card-content'>
               <p>Random text here</p>
-            </CardContent>
-            <CardEnd>
-              <button>Open</button>
-            </CardEnd>
+              <div className='content-hidden' ref='hidden'>
+                <h2>howdy</h2>
+              </div>
+            </div>
+            <div className='card-end'>
+              <button>Action</button>
+            </div>
           </Card>
           <Card>
-            <CardName name='Invite friends' />
-            <CardContent>
+            <h4 className='card-name'>Invite friends</h4>
+            <div className='card-content'>
               <ul className='card-board'>
                 <li className='board-item'>
                   <span className='item-section item-section--dark'>1</span>
@@ -72,19 +72,19 @@ export default class Challenge extends React.Component {
                   <span className='item-section'>More text here</span>
                 </li>
               </ul>
-            </CardContent>
-            <CardEnd>
-              <button>Open</button>
-            </CardEnd>
+            </div>
+            <div className='card-end'>
+              <button>Action</button>
+            </div>
           </Card>
           <Card>
-            <CardName name='Another crazy card :)' />
-            <CardContent>
+            <h4 className='card-name'>Another crazy card :)</h4>
+            <div className='card-content'>
               <p>Random text here</p>
-            </CardContent>
-            <CardEnd>
-              <button>Open</button>
-            </CardEnd>
+            </div>
+            <div className='card-end'>
+              <button>Action</button>
+            </div>
           </Card>
         </Carder>
       </div>

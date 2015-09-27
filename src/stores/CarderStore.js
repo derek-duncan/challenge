@@ -32,10 +32,16 @@ class CarderStore {
     this.setActiveCard(cardNumber);
   }
   onPreviousCard() {
-    this.activeCardNumber -= 1;
+    var number = this.activeCardNumber - 1;
+    if (number > 0) {
+      this.setActiveCard(number);
+    }
   }
   onNextCard() {
-    this.activeCardNumber += 1;
+    var number = this.activeCardNumber + 1;
+    if (number <= this.numberOfCards) {
+      this.setActiveCard(number);
+    }
   }
 }
 

@@ -36,6 +36,7 @@
     "mongoose": "^4.1.7",
     "normalize.css": "^3.0.3",
     "react": "^0.13.3",
+    "react-hammerjs": "^0.3.0",
     "react-router": "^1.0.0-rc1"
   },
   "devDependencies": {
