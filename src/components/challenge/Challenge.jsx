@@ -8,8 +8,9 @@ import ChallengeStore from '../../stores/ChallengeStore';
 
 // Components
 import ChallengeName from './ChallengeName.jsx';
-import Card from './Card.jsx';
 import Carder from './Carder.jsx';
+import Card from './cards/Card.jsx';
+import CardContentHidden from './cards/CardContentHidden.jsx';
 
 export default class Challenge extends React.Component {
   constructor(props) {
@@ -40,6 +41,11 @@ export default class Challenge extends React.Component {
     this.setState(state);
   }
   render() {
+    let demoList = [
+      'Text 1',
+      'Text 2',
+      'Text 3'
+    ];
     return (
       <div id='challenge'>
         <div className='challenge-details'>
@@ -48,16 +54,7 @@ export default class Challenge extends React.Component {
         </div>
         <Carder>
           <Card>
-            <h4 className='card-name'>{this.state.step.name}</h4>
-            <div className='card-content'>
-              <p>Random text here</p>
-              <div className='content-hidden' ref='hidden'>
-                <h2>howdy</h2>
-              </div>
-            </div>
-            <div className='card-end'>
-              <button>Action</button>
-            </div>
+            <CardContentHidden name={this.state.step.name} actionText={this.state.step.action} initialContent='Random text here' hiddenContent={demoList} />
           </Card>
           <Card>
             <h4 className='card-name'>Invite friends</h4>

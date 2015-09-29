@@ -2638,6 +2638,9 @@ html, body {
 .card-content p:last-child {
   margin: 0;
 }
+.card-content.hide {
+  display: none;
+}
 .card-board {
   width: 100%;
   background-color: #27D5AE;

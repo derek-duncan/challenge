@@ -20,9 +20,7 @@ export default class Card extends React.Component {
     };
     return (
       <div data-index={this.props.cardNumber} key={this.props.cardNumber} className={classes} style={styles}>
-        <div className='card-inner'>
-          {this.props.children}
-        </div>
+        {this.props.children}
       </div>
     )
   }
